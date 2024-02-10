@@ -8,13 +8,13 @@ find_package(SDL2 CONFIG REQUIRED)
 
 include_directories(${SDL2_INCLUDE_DIR})
 
-add_executable(SDL_RayTracing main.cpp
-        Screen.cpp
-        Screen.h
-        Image.cpp
-        Image.h
-        Scene.cpp
-        Scene.h
+add_executable(SDL_RayTracing src/main.cpp
+        src/Screen.cpp
+        src/Screen.h
+        src/Image.cpp
+        src/Image.h
+        src/Scene.cpp
+        src/Scene.h
 )
 
 target_link_libraries(SDL_RayTracing ${SDL2_LIBRARY} -lmingw32 -lSDL2main -lSDL2 -mwindows)
