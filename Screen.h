@@ -6,11 +6,14 @@
 #define SDL_RAYTRACING_SCREEN_H
 
 #include <SDL2/SDL.h>
+#include "Image.h"
 
 class Screen {
 private:
     SDL_Window* mainWindow{};
     SDL_Renderer* renderer{};
+
+    Image* image;
 
     bool isRunning;
 

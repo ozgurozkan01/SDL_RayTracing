@@ -7,7 +7,7 @@
 
 Screen::Screen() :
     WINDOW_HEIGHT(720),
-    WINDOW_WIDTH(1280),
+    WINDOW_WIDTH(720),
     WINDOW_NAME("SDL_RayTracing"),
     isRunning(true)
 {
@@ -51,6 +51,7 @@ bool Screen::init()
         return false;
     }
 
+    image = new Image(WINDOW_WIDTH, WINDOW_HEIGHT, renderer);
     return true;
 }
 
@@ -60,6 +61,7 @@ void Screen::update()
     {
         eventProcess();
         render();
+        image->display();
     }
 }
 
@@ -85,7 +87,5 @@ void Screen::eventProcess()
 
 void Screen::render()
 {
-    SDL_SetRenderDrawColor(renderer, 255, 255, 255 ,255);
-    SDL_RenderClear(renderer);
-    SDL_RenderPresent(renderer);
+    image->display();
 }
