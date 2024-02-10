@@ -7,7 +7,7 @@
 
 Screen::Screen() :
     WINDOW_HEIGHT(720),
-    WINDOW_WIDTH(720),
+    WINDOW_WIDTH(1280),
     WINDOW_NAME("SDL_RayTracing"),
     isRunning(true)
 {
@@ -67,6 +67,7 @@ void Screen::update()
 
 void Screen::destroy()
 {
+    delete image;
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(mainWindow);
     SDL_Quit();
@@ -87,5 +88,5 @@ void Screen::eventProcess()
 
 void Screen::render()
 {
-    image->display();
+
 }
