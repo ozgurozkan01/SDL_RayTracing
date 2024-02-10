@@ -5,9 +5,29 @@
 #ifndef SDL_RAYTRACING_SCREEN_H
 #define SDL_RAYTRACING_SCREEN_H
 
+#include <SDL2/SDL.h>
 
 class Screen {
+private:
+    SDL_Window* mainWindow{};
+    SDL_Renderer* renderer{};
 
+    bool isRunning;
+
+    const int WINDOW_WIDTH;
+    const int WINDOW_HEIGHT;
+    const char* WINDOW_NAME;
+public:
+    Screen();
+    ~Screen();
+
+    bool init();
+
+    void update();
+    void eventProcess();
+    void render();
+
+    void destroy();
 };
 
 
