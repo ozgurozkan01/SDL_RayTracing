@@ -19,6 +19,8 @@ public:
     void setPixelColor();
     void display();
 
+    inline int getImageWidth() const { return image_width; }
+    inline int getImageHeight() const { return image_height; }
 private:
     SDL_Texture* texture;
     SDL_Renderer* renderer;
@@ -26,8 +28,8 @@ private:
 
     glm::vec3 newVec;
 
-    const int window_width;
-    const int window_height;
+    const int image_width;
+    const int image_height;
 };
 
 
