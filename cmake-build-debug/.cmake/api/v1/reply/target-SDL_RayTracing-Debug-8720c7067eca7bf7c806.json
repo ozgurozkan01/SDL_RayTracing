@@ -182,12 +182,12 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "src/Scene.cpp",
+			"path" : "src/Ray.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
-			"path" : "src/Scene.h",
+			"path" : "src/Ray.h",
 			"sourceGroupIndex" : 1
 		}
 	],
