@@ -15,6 +15,8 @@ add_executable(SDL_RayTracing src/main.cpp
         src/Image.h
         src/Ray.cpp
         src/Ray.h
+        src/Camera.cpp
+        src/Camera.h
 )
 
 target_link_libraries(SDL_RayTracing ${SDL2_LIBRARY} -lmingw32 -lSDL2main -lSDL2 -mwindows)
