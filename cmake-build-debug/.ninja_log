@@ -1,6 +1,7 @@
 # ninja log v5
-3	1096	7292299666939376	CMakeFiles/SDL_RayTracing.dir/main.cpp.obj	b8c334e9bca8248
-1	147	7292306897025264	build.ninja	44c623533de52cd0
+4	1135	7292942328838453	CMakeFiles/SDL_RayTracing.dir/main.cpp.obj	b8c334e9bca8248
+1	147	7292979858568164	build.ninja	44c623533de52cd0
 14	78	7292270566562255	CMakeFiles/SDL_RayTracing.dir/Render.cpp.obj	5de89df4253fe44d
-1138	1233	7292299668278891	SDL_RayTracing.exe	446b4fc528d1b684
-8	1138	7292299667361209	CMakeFiles/SDL_RayTracing.dir/Screen.cpp.obj	dd2d2054997119a6
+1140	1236	7292942628947390	SDL_RayTracing.exe	9e935e58b0bd5f0f
+8	1175	7292942329238144	CMakeFiles/SDL_RayTracing.dir/Screen.cpp.obj	dd2d2054997119a6
+3	1140	7292942628044201	CMakeFiles/SDL_RayTracing.dir/Image.cpp.obj	6c9581f647332f6a
