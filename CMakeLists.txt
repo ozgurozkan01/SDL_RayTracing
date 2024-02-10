@@ -10,6 +10,8 @@ include_directories(${SDL2_INCLUDE_DIR})
 
 add_executable(SDL_RayTracing main.cpp
         Screen.cpp
-        Screen.h)
+        Screen.h
+        Render.cpp
+        Render.h)
 
 target_link_libraries(SDL_RayTracing ${SDL2_LIBRARY} -lmingw32 -lSDL2main -lSDL2 -mwindows)
