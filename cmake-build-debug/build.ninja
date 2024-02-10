@@ -49,33 +49,33 @@ cmake_ninja_workdir = C$:/Users/ozgur/GitHub/SDL_RayTracing/cmake-build-debug/
 
 build cmake_object_order_depends_target_SDL_RayTracing: phony || CMakeFiles/SDL_RayTracing.dir
 
-build CMakeFiles/SDL_RayTracing.dir/main.cpp.obj: CXX_COMPILER__SDL_RayTracing_unscanned_Debug C$:/Users/ozgur/GitHub/SDL_RayTracing/main.cpp || cmake_object_order_depends_target_SDL_RayTracing
-  DEP_FILE = CMakeFiles\SDL_RayTracing.dir\main.cpp.obj.d
+build CMakeFiles/SDL_RayTracing.dir/src/main.cpp.obj: CXX_COMPILER__SDL_RayTracing_unscanned_Debug C$:/Users/ozgur/GitHub/SDL_RayTracing/src/main.cpp || cmake_object_order_depends_target_SDL_RayTracing
+  DEP_FILE = CMakeFiles\SDL_RayTracing.dir\src\main.cpp.obj.d
   FLAGS = -g -fdiagnostics-color=always
   INCLUDES = -I"C:/Program Files/JetBrains/CLion 2023.1.5/bin/mingw/include/SDL2"
   OBJECT_DIR = CMakeFiles\SDL_RayTracing.dir
-  OBJECT_FILE_DIR = CMakeFiles\SDL_RayTracing.dir
+  OBJECT_FILE_DIR = CMakeFiles\SDL_RayTracing.dir\src
 
-build CMakeFiles/SDL_RayTracing.dir/Screen.cpp.obj: CXX_COMPILER__SDL_RayTracing_unscanned_Debug C$:/Users/ozgur/GitHub/SDL_RayTracing/Screen.cpp || cmake_object_order_depends_target_SDL_RayTracing
-  DEP_FILE = CMakeFiles\SDL_RayTracing.dir\Screen.cpp.obj.d
+build CMakeFiles/SDL_RayTracing.dir/src/Screen.cpp.obj: CXX_COMPILER__SDL_RayTracing_unscanned_Debug C$:/Users/ozgur/GitHub/SDL_RayTracing/src/Screen.cpp || cmake_object_order_depends_target_SDL_RayTracing
+  DEP_FILE = CMakeFiles\SDL_RayTracing.dir\src\Screen.cpp.obj.d
   FLAGS = -g -fdiagnostics-color=always
   INCLUDES = -I"C:/Program Files/JetBrains/CLion 2023.1.5/bin/mingw/include/SDL2"
   OBJECT_DIR = CMakeFiles\SDL_RayTracing.dir
-  OBJECT_FILE_DIR = CMakeFiles\SDL_RayTracing.dir
+  OBJECT_FILE_DIR = CMakeFiles\SDL_RayTracing.dir\src
 
-build CMakeFiles/SDL_RayTracing.dir/Image.cpp.obj: CXX_COMPILER__SDL_RayTracing_unscanned_Debug C$:/Users/ozgur/GitHub/SDL_RayTracing/Image.cpp || cmake_object_order_depends_target_SDL_RayTracing
-  DEP_FILE = CMakeFiles\SDL_RayTracing.dir\Image.cpp.obj.d
+build CMakeFiles/SDL_RayTracing.dir/src/Image.cpp.obj: CXX_COMPILER__SDL_RayTracing_unscanned_Debug C$:/Users/ozgur/GitHub/SDL_RayTracing/src/Image.cpp || cmake_object_order_depends_target_SDL_RayTracing
+  DEP_FILE = CMakeFiles\SDL_RayTracing.dir\src\Image.cpp.obj.d
   FLAGS = -g -fdiagnostics-color=always
   INCLUDES = -I"C:/Program Files/JetBrains/CLion 2023.1.5/bin/mingw/include/SDL2"
   OBJECT_DIR = CMakeFiles\SDL_RayTracing.dir
-  OBJECT_FILE_DIR = CMakeFiles\SDL_RayTracing.dir
+  OBJECT_FILE_DIR = CMakeFiles\SDL_RayTracing.dir\src
 
-build CMakeFiles/SDL_RayTracing.dir/Scene.cpp.obj: CXX_COMPILER__SDL_RayTracing_unscanned_Debug C$:/Users/ozgur/GitHub/SDL_RayTracing/Scene.cpp || cmake_object_order_depends_target_SDL_RayTracing
-  DEP_FILE = CMakeFiles\SDL_RayTracing.dir\Scene.cpp.obj.d
+build CMakeFiles/SDL_RayTracing.dir/src/Scene.cpp.obj: CXX_COMPILER__SDL_RayTracing_unscanned_Debug C$:/Users/ozgur/GitHub/SDL_RayTracing/src/Scene.cpp || cmake_object_order_depends_target_SDL_RayTracing
+  DEP_FILE = CMakeFiles\SDL_RayTracing.dir\src\Scene.cpp.obj.d
   FLAGS = -g -fdiagnostics-color=always
   INCLUDES = -I"C:/Program Files/JetBrains/CLion 2023.1.5/bin/mingw/include/SDL2"
   OBJECT_DIR = CMakeFiles\SDL_RayTracing.dir
-  OBJECT_FILE_DIR = CMakeFiles\SDL_RayTracing.dir
+  OBJECT_FILE_DIR = CMakeFiles\SDL_RayTracing.dir\src
 
 
 # =============================================================================
@@ -85,7 +85,7 @@ build CMakeFiles/SDL_RayTracing.dir/Scene.cpp.obj: CXX_COMPILER__SDL_RayTracing_
 #############################################
 # Link the executable SDL_RayTracing.exe
 
-build SDL_RayTracing.exe: CXX_EXECUTABLE_LINKER__SDL_RayTracing_Debug CMakeFiles/SDL_RayTracing.dir/main.cpp.obj CMakeFiles/SDL_RayTracing.dir/Screen.cpp.obj CMakeFiles/SDL_RayTracing.dir/Image.cpp.obj CMakeFiles/SDL_RayTracing.dir/Scene.cpp.obj
+build SDL_RayTracing.exe: CXX_EXECUTABLE_LINKER__SDL_RayTracing_Debug CMakeFiles/SDL_RayTracing.dir/src/main.cpp.obj CMakeFiles/SDL_RayTracing.dir/src/Screen.cpp.obj CMakeFiles/SDL_RayTracing.dir/src/Image.cpp.obj CMakeFiles/SDL_RayTracing.dir/src/Scene.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lmingw32  -lSDL2main  -lSDL2  -mwindows  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\SDL_RayTracing.dir
