@@ -11,6 +11,6 @@
 -- Check for working CXX compiler: C:/Program Files/JetBrains/CLion 2023.1.5/bin/mingw/bin/g++.exe - skipped
 -- Detecting CXX compile features
 -- Detecting CXX compile features - done
--- Configuring done (1.6s)
+-- Configuring done (1.3s)
 -- Generating done (0.0s)
 -- Build files have been written to: C:/Users/ozgur/GitHub/SDL_RayTracing/cmake-build-debug
