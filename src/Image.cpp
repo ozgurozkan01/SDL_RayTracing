@@ -31,19 +31,30 @@ void Image::init()
 
 uint32_t Image::getPixelColor(glm::vec2 coords) const
 {
-    uint8_t red = (coords.x) / (image_width - 1) * 255;
-    uint8_t green = (double(coords.y) / (image_height - 1)) * 255;
+    // P(t) = A + tb -> ray equation
+    // A is the origin of sphere (vec)
+    glm::vec3 rayOrigin(0.0f, 0.f, 2.f);
+    // b is the direction of sphere (vec)
+    glm::vec3 rayDirection(coords.x, coords.y, -1);
+    // t is the multiplier for scalar magnitude (float)
 
-    uint32_t pixelColor = 0x00000000;
-    pixelColor += red;
-    pixelColor <<= 8;
-    pixelColor += green;
-    pixelColor <<= 8;
-    pixelColor += 0x00;
-    pixelColor <<= 8;
-    pixelColor += 0xFF;
+    float sphereRadius = 0.5;
 
-    return pixelColor;
+    //       (a)t^2     +        (b)t       +          (c)  -> Quadratic Equation
+    // (bx^2 + by^2)t^2 + (2(Axbx + Ayby))t + (Ax^2 + Ay^2 - r^2) = 0
+
+    float a = glm::dot(rayDirection, rayDirection);
+    float b = 2.f * glm::dot(rayOrigin, rayDirection);
+    float c = glm::dot(rayOrigin, rayOrigin) - pow(sphereRadius, 2);
+
+    float discriminant = b*b - 4.f*a*c;
+
+    if (discriminant >= 0)
+    {
+        return 0xFF0000FF;
+    }
+
+    return 0x000000FF;
 }
 
 void Image::setPixelColor()
@@ -52,7 +63,10 @@ void Image::setPixelColor()
     {
         for (int x = 0; x < image_width; ++x)
         {
-            glm::vec2 pixelCoord(x, y);
+            glm::vec2 pixelCoord((float)x / (float)image_width, (float)y / (float)image_height);
+            // Update pixel range
+            pixelCoord = (pixelCoord * 2.0f) - 1.f;
+            pixelCoord.x *= (image_width / (float)image_height);
             imagePixels[x + y * image_width] = getPixelColor(pixelCoord);
         }
     }
