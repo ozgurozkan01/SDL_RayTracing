@@ -14,14 +14,18 @@ public:
     Image(int width, int height, SDL_Renderer* renderer);
     ~Image();
 
-    void init();
-    [[nodiscard]] uint32_t getPixelColor(glm::vec2 coords) const;
-    void setPixelColor();
     void display();
 
     inline int getImageWidth() const { return image_width; }
     inline int getImageHeight() const { return image_height; }
 private:
+
+    void init();
+    [[nodiscard]] glm::vec4 getPixelColorVector(glm::vec2 coords) const;
+    uint32_t ConvertToRGBA(glm::vec4& colorVector);
+    void setPixelColor();
+    void shading();
+
     SDL_Texture* texture;
     SDL_Renderer* renderer;
     uint32_t * imagePixels;

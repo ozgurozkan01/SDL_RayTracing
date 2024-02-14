@@ -29,17 +29,15 @@ void Image::init()
                                 image_height);
 }
 
-uint32_t Image::getPixelColor(glm::vec2 coords) const
+glm::vec4 Image::getPixelColorVector(glm::vec2 coords) const
 {
     // P(t) = A + tb -> ray equation
+    // t is the multiplier for scalar magnitude (float)
     // A is the origin of sphere (vec)
-    glm::vec3 rayOrigin(0.0f, 0.f, 2.f);
+    glm::vec3 rayOrigin(0.0f, 0.0f, 2.0f);
     // b is the direction of sphere (vec)
     glm::vec3 rayDirection(coords.x, coords.y, -1);
-    // t is the multiplier for scalar magnitude (float)
-
-    float sphereRadius = 0.5;
-
+    float sphereRadius = 1;
     //       (a)t^2     +        (b)t       +          (c)  -> Quadratic Equation
     // (bx^2 + by^2)t^2 + (2(Axbx + Ayby))t + (Ax^2 + Ay^2 - r^2) = 0
 
@@ -47,14 +45,45 @@ uint32_t Image::getPixelColor(glm::vec2 coords) const
     float b = 2.f * glm::dot(rayOrigin, rayDirection);
     float c = glm::dot(rayOrigin, rayOrigin) - pow(sphereRadius, 2);
 
-    float discriminant = b*b - 4.f*a*c;
+    float discriminant = (b * b) - (4.f * a * c);
 
-    if (discriminant >= 0)
+    // No Intersection
+    if (discriminant < 0.0f)
     {
-        return 0xFF0000FF;
+        return glm::vec4(0, 0, 0, 1);
     }
 
-    return 0x000000FF;
+    // This t value is the smallest, because of  subtraction
+    // (-b -+ sqrt(discriminant)) / 2*a
+    float smallestT = (-b - glm::sqrt(discriminant)) / (2.0f * a);
+
+    glm::vec3 hitPoint = rayOrigin + rayDirection * smallestT;
+    glm::vec3 normal = glm::normalize(hitPoint);
+
+    glm::vec3 lightDirection = glm::normalize(glm::vec3(-1, 1, -1));
+    float dotProductOfLight = glm::max(glm::dot(normal,-lightDirection), 0.0f);
+
+    glm::vec3 sphereColor(1, 0, 0);
+    sphereColor *= dotProductOfLight;
+
+    return glm::vec4(sphereColor, 1.f);
+}
+
+uint32_t Image::ConvertToRGBA(glm::vec4 &colorVector)
+{
+    // x -> red, y -> green, z -> blue
+    // x > others more red
+    // y > others more green
+    // z > others more blue
+
+    uint8_t red = (uint8_t)(colorVector.x * 255.f);
+    uint8_t green = (uint8_t)(colorVector.y * 255.f);
+    uint8_t blue = (uint8_t)(colorVector.z * 255.f);
+    uint8_t alpha = (uint8_t)(colorVector.a * 255.f);
+
+    uint32_t color = (red << 24) | (green << 16) | (blue << 8) | alpha;
+
+    return color;
 }
 
 void Image::setPixelColor()
@@ -67,7 +96,12 @@ void Image::setPixelColor()
             // Update pixel range
             pixelCoord = (pixelCoord * 2.0f) - 1.f;
             pixelCoord.x *= (image_width / (float)image_height);
-            imagePixels[x + y * image_width] = getPixelColor(pixelCoord);
+
+            glm::vec4 color = getPixelColorVector(pixelCoord);
+            // this clamping provides us to not get negative or bigger than 1 value
+            // In this way all color values are going to be in [0-1] range -> [0, 255]
+            color = glm::clamp(color, glm::vec4(0.0f), glm::vec4(1.0f));
+            imagePixels[x + y * image_width] = ConvertToRGBA(color);
         }
     }
 }
