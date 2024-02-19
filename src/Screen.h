@@ -6,6 +6,7 @@
 #define SDL_RAYTRACING_SCREEN_H
 
 #include <SDL2/SDL.h>
+#include "Camera.h"
 #include "Image.h"
 
 class Screen {
@@ -14,12 +15,15 @@ private:
     SDL_Renderer* renderer{};
 
     Image* image;
+    Camera* camera;
 
     bool isRunning;
 
     const int WINDOW_WIDTH;
-    const int WINDOW_HEIGHT;
+    int WINDOW_HEIGHT;
     const char* WINDOW_NAME;
+
+    float aspectRatio;
 public:
     Screen();
     ~Screen();

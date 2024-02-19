@@ -3,14 +3,18 @@
 //
 
 #include "Screen.h"
-#include <stdio.h>
+#include <cstdio>
+#include <iostream>
 
 Screen::Screen() :
-    WINDOW_HEIGHT(720),
-    WINDOW_WIDTH(1280),
     WINDOW_NAME("SDL_RayTracing"),
-    isRunning(true)
+    isRunning(true),
+    aspectRatio(16.f / 9.f),
+    WINDOW_WIDTH(1280)
 {
+    WINDOW_HEIGHT = WINDOW_WIDTH / aspectRatio;
+    std::cout << WINDOW_HEIGHT << std::endl;
+    WINDOW_HEIGHT = (WINDOW_HEIGHT < 1) ? 1 : WINDOW_HEIGHT;
     init();
 }
 
@@ -51,7 +55,8 @@ bool Screen::init()
         return false;
     }
 
-    image = new Image(WINDOW_WIDTH, WINDOW_HEIGHT, renderer);
+    camera = new Camera(WINDOW_WIDTH, WINDOW_HEIGHT);
+    image = new Image(WINDOW_WIDTH, WINDOW_HEIGHT, renderer, camera);
     return true;
 }
 
@@ -68,6 +73,7 @@ void Screen::update()
 void Screen::destroy()
 {
     delete image;
+    delete camera;
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(mainWindow);
     SDL_Quit();
