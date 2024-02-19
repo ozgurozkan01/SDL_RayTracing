@@ -98,6 +98,13 @@ build CMakeFiles/SDL_RayTracing.dir/src/Sphere.cpp.obj: CXX_COMPILER__SDL_RayTra
   OBJECT_DIR = CMakeFiles\SDL_RayTracing.dir
   OBJECT_FILE_DIR = CMakeFiles\SDL_RayTracing.dir\src
 
+build CMakeFiles/SDL_RayTracing.dir/src/HittableCollection.cpp.obj: CXX_COMPILER__SDL_RayTracing_unscanned_Debug C$:/Users/ozgur/GitHub/SDL_RayTracing/src/HittableCollection.cpp || cmake_object_order_depends_target_SDL_RayTracing
+  DEP_FILE = CMakeFiles\SDL_RayTracing.dir\src\HittableCollection.cpp.obj.d
+  FLAGS = -g -fdiagnostics-color=always
+  INCLUDES = -I"C:/Program Files/JetBrains/CLion 2023.1.5/bin/mingw/include/SDL2"
+  OBJECT_DIR = CMakeFiles\SDL_RayTracing.dir
+  OBJECT_FILE_DIR = CMakeFiles\SDL_RayTracing.dir\src
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target SDL_RayTracing
@@ -106,7 +113,7 @@ build CMakeFiles/SDL_RayTracing.dir/src/Sphere.cpp.obj: CXX_COMPILER__SDL_RayTra
 #############################################
 # Link the executable SDL_RayTracing.exe
 
-build SDL_RayTracing.exe: CXX_EXECUTABLE_LINKER__SDL_RayTracing_Debug CMakeFiles/SDL_RayTracing.dir/src/main.cpp.obj CMakeFiles/SDL_RayTracing.dir/src/Screen.cpp.obj CMakeFiles/SDL_RayTracing.dir/src/Image.cpp.obj CMakeFiles/SDL_RayTracing.dir/src/Ray.cpp.obj CMakeFiles/SDL_RayTracing.dir/src/Camera.cpp.obj CMakeFiles/SDL_RayTracing.dir/src/Hittable.cpp.obj CMakeFiles/SDL_RayTracing.dir/src/Sphere.cpp.obj
+build SDL_RayTracing.exe: CXX_EXECUTABLE_LINKER__SDL_RayTracing_Debug CMakeFiles/SDL_RayTracing.dir/src/main.cpp.obj CMakeFiles/SDL_RayTracing.dir/src/Screen.cpp.obj CMakeFiles/SDL_RayTracing.dir/src/Image.cpp.obj CMakeFiles/SDL_RayTracing.dir/src/Ray.cpp.obj CMakeFiles/SDL_RayTracing.dir/src/Camera.cpp.obj CMakeFiles/SDL_RayTracing.dir/src/Hittable.cpp.obj CMakeFiles/SDL_RayTracing.dir/src/Sphere.cpp.obj CMakeFiles/SDL_RayTracing.dir/src/HittableCollection.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lmingw32  -lSDL2main  -lSDL2  -mwindows  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\SDL_RayTracing.dir
