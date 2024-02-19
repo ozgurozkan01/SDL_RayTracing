@@ -4,11 +4,15 @@
 
 #include "Image.h"
 #include <iostream>
+#include "Ray.h"
+#include "Camera.h"
+#include "Sphere.h"
 
-Image::Image(int width, int height, SDL_Renderer* renderer) :
+Image::Image(int width, int height, SDL_Renderer* renderer, Camera* camera) :
         image_width(width),
         image_height(height),
-        renderer(renderer)
+        renderer(renderer),
+        cameraRef(camera)
 {
     init();
 }
@@ -27,63 +31,19 @@ void Image::init()
                                 SDL_TEXTUREACCESS_STATIC,
                                 image_width,
                                 image_height);
+
+    sphereRef = new Sphere(glm::vec3(0,0,-1), 0.5f);
+    sphereRef2 = new Sphere(glm::vec3(0,-100.5,-1), 100);
 }
 
-glm::vec4 Image::getPixelColorVector(glm::vec2 coords) const
+void Image::display()
 {
-    // P(t) = A + tb -> ray equation
-    // t is the multiplier for scalar magnitude (float)
-    // A is the origin of sphere (vec)
-    glm::vec3 rayOrigin(0.0f, 0.0f, 2.0f);
-    // b is the direction of sphere (vec)
-    glm::vec3 rayDirection(coords.x, coords.y, -1);
-    float sphereRadius = 1;
-    //       (a)t^2     +        (b)t       +          (c)  -> Quadratic Equation
-    // (bx^2 + by^2)t^2 + (2(Axbx + Ayby))t + (Ax^2 + Ay^2 - r^2) = 0
+    setPixelColor();
 
-    float a = glm::dot(rayDirection, rayDirection);
-    float b = 2.f * glm::dot(rayOrigin, rayDirection);
-    float c = glm::dot(rayOrigin, rayOrigin) - pow(sphereRadius, 2);
-
-    float discriminant = (b * b) - (4.f * a * c);
-
-    // No Intersection
-    if (discriminant < 0.0f)
-    {
-        return glm::vec4(0, 0, 0, 1);
-    }
-
-    // This t value is the smallest, because of  subtraction
-    // (-b -+ sqrt(discriminant)) / 2*a
-    float smallestT = (-b - glm::sqrt(discriminant)) / (2.0f * a);
-
-    glm::vec3 hitPoint = rayOrigin + rayDirection * smallestT;
-    glm::vec3 normal = glm::normalize(hitPoint);
-
-    glm::vec3 lightDirection = glm::normalize(glm::vec3(-1, 1, -1));
-    float dotProductOfLight = glm::max(glm::dot(normal,-lightDirection), 0.0f);
-
-    glm::vec3 sphereColor(1, 0, 0);
-    sphereColor *= dotProductOfLight;
-
-    return glm::vec4(sphereColor, 1.f);
-}
-
-uint32_t Image::ConvertToRGBA(glm::vec4 &colorVector)
-{
-    // x -> red, y -> green, z -> blue
-    // x > others more red
-    // y > others more green
-    // z > others more blue
-
-    uint8_t red = (uint8_t)(colorVector.x * 255.f);
-    uint8_t green = (uint8_t)(colorVector.y * 255.f);
-    uint8_t blue = (uint8_t)(colorVector.z * 255.f);
-    uint8_t alpha = (uint8_t)(colorVector.a * 255.f);
-
-    uint32_t color = (red << 24) | (green << 16) | (blue << 8) | alpha;
-
-    return color;
+    SDL_UpdateTexture(texture, nullptr, imagePixels, image_width * sizeof(uint32_t));
+    SDL_RenderClear(renderer);
+    SDL_RenderCopy(renderer, texture, nullptr, nullptr);
+    SDL_RenderPresent(renderer);
 }
 
 void Image::setPixelColor()
@@ -92,25 +52,18 @@ void Image::setPixelColor()
     {
         for (int x = 0; x < image_width; ++x)
         {
-            glm::vec2 pixelCoord((float)x / (float)image_width, (float)y / (float)image_height);
-            // Update pixel range
-            pixelCoord = (pixelCoord * 2.0f) - 1.f;
-            pixelCoord.x *= (image_width / (float)image_height);
+            auto pixelCenter = cameraRef->centeredPixelLoc + ((float)x * cameraRef->pixelDeltaU) + ((float)y * cameraRef->pixelDeltaV);
+            auto rayDirection = pixelCenter - cameraRef->cameraCenter;
+            Ray r(cameraRef->cameraCenter, rayDirection);
 
-            glm::vec4 color = getPixelColorVector(pixelCoord);
-            // this clamping provides us to not get negative or bigger than 1 value
-            // In this way all color values are going to be in [0-1] range -> [0, 255]
-            color = glm::clamp(color, glm::vec4(0.0f), glm::vec4(1.0f));
-            imagePixels[x + y * image_width] = ConvertToRGBA(color);
+            glm::vec3 pixelColorVector = r.rayColor(r, *sphereRef2);
+            int red = static_cast<int>(255.999 * pixelColorVector.r);
+            int green = static_cast<int>(255.999 * pixelColorVector.g);
+            int blue = static_cast<int>(255.999 * pixelColorVector.b);
+            int alpha = 255;
+
+            uint32_t pixelColor = (red << 24) | (green << 16) | (blue << 8) | alpha;
+            imagePixels[x + y * image_width] = pixelColor;
         }
     }
-}
-
-void Image::display()
-{
-    setPixelColor();
-    SDL_UpdateTexture(texture, nullptr, imagePixels, image_width * sizeof(uint32_t));
-    SDL_RenderClear(renderer);
-    SDL_RenderCopy(renderer, texture, nullptr, nullptr);
-    SDL_RenderPresent(renderer);
 }

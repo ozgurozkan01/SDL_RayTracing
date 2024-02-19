@@ -9,28 +9,27 @@
 #include <SDL2/SDL.h>
 #include <GLM/glm/glm.hpp>
 
+class Camera;
+class Sphere;
+
 class Image {
 public:
-    Image(int width, int height, SDL_Renderer* renderer);
+    Image(int width, int height, SDL_Renderer* renderer, Camera* camera);
     ~Image();
 
     void display();
-
-    inline int getImageWidth() const { return image_width; }
-    inline int getImageHeight() const { return image_height; }
 private:
 
     void init();
-    [[nodiscard]] glm::vec4 getPixelColorVector(glm::vec2 coords) const;
-    uint32_t ConvertToRGBA(glm::vec4& colorVector);
     void setPixelColor();
-    void shading();
 
     SDL_Texture* texture;
     SDL_Renderer* renderer;
     uint32_t * imagePixels;
 
-    glm::vec3 newVec;
+    Camera* cameraRef;
+    Sphere* sphereRef;
+    Sphere* sphereRef2;
 
     const int image_width;
     const int image_height;
