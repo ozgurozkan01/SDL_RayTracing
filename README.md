@@ -8,7 +8,7 @@ In project, with mathematic, to create an light simulation using vectors and by 
 * Ray Tracing One Weekend Doc ( First Chapter Of 3 ) -> URL : https://raytracing.github.io/
 
 # How it looks                                                                                    
-![Ekran görüntüsü 2024-02-14 225812](https://github.com/ozgurozkan01/SDL_RayTracing/assets/90643276/a42d0d20-d285-4777-80bf-8c9d298f5f8f)
+![image](https://github.com/ozgurozkan01/SDL_RayTracing/assets/90643276/8d7209e1-a7d3-4457-b62c-6e2c9dace0d2)
 
 # Dependencies
 * SDL2
