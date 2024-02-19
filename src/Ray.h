@@ -18,7 +18,7 @@ public:
     [[nodiscard]] glm::vec3 getDirection() const;
     [[nodiscard]] glm::vec3 at(float t) const;
 
-    glm::vec3 rayColor(const Ray& ray, const Sphere& sphere);
+    glm::vec3 rayColor(const Ray& ray, const class Hittable& world);
 private:
     glm::vec3 origin;
     glm::vec3 direction;

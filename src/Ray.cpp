@@ -23,11 +23,10 @@ glm::vec3 Ray::at(float t) const {
     return origin + (t * direction);
 }
 
-glm::vec3 Ray::rayColor(const Ray &ray, const Sphere& sphere)
+glm::vec3 Ray::rayColor(const Ray &ray, const class Hittable& world)
 {
     HitInfo hitInfo;
-    if (sphere.isHit(ray, 0, infinity, hitInfo))
-    {
+    if (world.isHit(ray, 0, infinity, hitInfo)) {
         return 0.5f * (hitInfo.normal + glm::vec3(1,1,1));
     }
 
