@@ -13,6 +13,14 @@ add_executable(SDL_RayTracing src/main.cpp
         src/Screen.h
         src/Image.cpp
         src/Image.h
+        src/Ray.cpp
+        src/Ray.h
+        src/Camera.cpp
+        src/Camera.h
+        src/Hittable.cpp
+        src/Hittable.h
+        src/Sphere.cpp
+        src/Sphere.h
 )
 
 target_link_libraries(SDL_RayTracing ${SDL2_LIBRARY} -lmingw32 -lSDL2main -lSDL2 -mwindows)
