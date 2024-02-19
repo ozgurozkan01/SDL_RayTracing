@@ -8,6 +8,8 @@
 #include <cstdint>
 #include <SDL2/SDL.h>
 #include <GLM/glm/glm.hpp>
+#include "Sphere.h"
+#include "HittableCollection.h"
 
 class Camera;
 class Sphere;
@@ -28,8 +30,9 @@ private:
     uint32_t * imagePixels;
 
     Camera* cameraRef;
-    Sphere* sphereRef;
-    Sphere* sphereRef2;
+    Sphere sphereRef;
+    Sphere sphereRef2;
+    HittableCollection world;
 
     const int image_width;
     const int image_height;

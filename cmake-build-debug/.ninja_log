@@ -12,3 +12,11 @@
 11	1156	7300653173331317	CMakeFiles/SDL_RayTracing.dir/src/Ray.cpp.obj	41b23df31c13c6e8
 3	1109	7300653172857255	CMakeFiles/SDL_RayTracing.dir/src/Hittable.cpp.obj	d287e0dfbced4188
 15	1178	7300653173548821	CMakeFiles/SDL_RayTracing.dir/src/Sphere.cpp.obj	ff98ddededd16ffc
+13	1817	7300734895256070	CMakeFiles/SDL_RayTracing.dir/src/Hittable.cpp.obj	d287e0dfbced4188
+37	1912	7300734896162803	CMakeFiles/SDL_RayTracing.dir/src/Sphere.cpp.obj	ff98ddededd16ffc
+23	1931	7300734896384044	CMakeFiles/SDL_RayTracing.dir/src/Ray.cpp.obj	41b23df31c13c6e8
+28	2094	7300734898027494	CMakeFiles/SDL_RayTracing.dir/src/HittableCollection.cpp.obj	dfd9e42793575a8
+4	2125	7300734898345246	CMakeFiles/SDL_RayTracing.dir/src/main.cpp.obj	e8dc8445c1b05cf0
+9	2392	7300734901027858	CMakeFiles/SDL_RayTracing.dir/src/Screen.cpp.obj	f478d43c1acb21e5
+18	2427	7300734901375534	CMakeFiles/SDL_RayTracing.dir/src/Image.cpp.obj	37d67357042c38c9
+2427	2559	7300734902633985	SDL_RayTracing.exe	10b8f6ed5daacb92

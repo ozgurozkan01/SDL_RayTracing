@@ -7,12 +7,16 @@
 #include "Ray.h"
 #include "Camera.h"
 #include "Sphere.h"
+#include "HittableCollection.h"
 
 Image::Image(int width, int height, SDL_Renderer* renderer, Camera* camera) :
         image_width(width),
         image_height(height),
         renderer(renderer),
-        cameraRef(camera)
+        cameraRef(camera),
+        sphereRef(glm::vec3(0,0,-1), 0.5f),
+        sphereRef2(glm::vec3(0,-100.5,-1), 100),
+        world()
 {
     init();
 }
@@ -32,8 +36,9 @@ void Image::init()
                                 image_width,
                                 image_height);
 
-    sphereRef = new Sphere(glm::vec3(0,0,-1), 0.5f);
-    sphereRef2 = new Sphere(glm::vec3(0,-100.5,-1), 100);
+
+    world.add(&sphereRef);
+    world.add(&sphereRef2);
 }
 
 void Image::display()
@@ -56,7 +61,7 @@ void Image::setPixelColor()
             auto rayDirection = pixelCenter - cameraRef->cameraCenter;
             Ray r(cameraRef->cameraCenter, rayDirection);
 
-            glm::vec3 pixelColorVector = r.rayColor(r, *sphereRef2);
+            glm::vec3 pixelColorVector = r.rayColor(r, world);
             int red = static_cast<int>(255.999 * pixelColorVector.r);
             int green = static_cast<int>(255.999 * pixelColorVector.g);
             int blue = static_cast<int>(255.999 * pixelColorVector.b);
