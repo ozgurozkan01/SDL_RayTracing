@@ -7,15 +7,19 @@
 
 #include <SDL2/SDL.h>
 #include "Camera.h"
-#include "Image.h"
+#include "Sphere.h"
+#include "HittableCollection.h"
 
 class Screen {
 private:
     SDL_Window* mainWindow{};
     SDL_Renderer* renderer{};
 
-    Image* image;
     Camera* camera;
+
+    Sphere sphereRef;
+    Sphere sphereRef2;
+    HittableCollection world;
 
     bool isRunning;
 
@@ -32,7 +36,6 @@ public:
 
     void update();
     void eventProcess();
-    void render();
 
     void destroy();
 };

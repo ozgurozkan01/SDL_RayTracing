@@ -9,10 +9,14 @@
 
 class Camera {
 public:
-    Camera(int _windowWidth, int _windowHeight);
-
+    Camera(int _windowWidth, int _windowHeight, class SDL_Renderer* renderer);
+    ~Camera();
     int windowWidth;
     int windowHeight;
+
+    class SDL_Texture* texture;
+    SDL_Renderer* renderer;
+    uint32_t * imagePixels;
 
     double viewportHeight;
     double viewportWidth;
@@ -26,8 +30,12 @@ public:
 
     glm::vec3 cameraCenter;
     double focalLength;
+
+    void setPixelColors(const class Hittable& world);
+    void render();
 private:
     void init();
+    glm::vec3 rayColor(const class Ray& ray, const class Hittable& world);
 };
 
 

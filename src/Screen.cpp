@@ -10,11 +10,12 @@ Screen::Screen() :
     WINDOW_NAME("SDL_RayTracing"),
     isRunning(true),
     aspectRatio(16.f / 9.f),
-    WINDOW_WIDTH(1280)
+    WINDOW_WIDTH(1280),
+    sphereRef(glm::vec3(0,0,-1), 0.5f),
+    sphereRef2(glm::vec3(0,-100.5,-1), 100),
+    world()
+
 {
-    WINDOW_HEIGHT = WINDOW_WIDTH / aspectRatio;
-    std::cout << WINDOW_HEIGHT << std::endl;
-    WINDOW_HEIGHT = (WINDOW_HEIGHT < 1) ? 1 : WINDOW_HEIGHT;
     init();
 }
 
@@ -25,6 +26,12 @@ Screen::~Screen()
 
 bool Screen::init()
 {
+    world.add(&sphereRef);
+    world.add(&sphereRef2);
+
+    WINDOW_HEIGHT = WINDOW_WIDTH / aspectRatio;
+    WINDOW_HEIGHT = (WINDOW_HEIGHT < 1) ? 1 : WINDOW_HEIGHT;
+
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
     {
         printf("error initializing SDL: %s\n", SDL_GetError());
@@ -55,8 +62,7 @@ bool Screen::init()
         return false;
     }
 
-    camera = new Camera(WINDOW_WIDTH, WINDOW_HEIGHT);
-    image = new Image(WINDOW_WIDTH, WINDOW_HEIGHT, renderer, camera);
+    camera = new Camera(WINDOW_WIDTH, WINDOW_HEIGHT, renderer);
     return true;
 }
 
@@ -65,34 +71,25 @@ void Screen::update()
     while (isRunning)
     {
         eventProcess();
-        render();
-        image->display();
+        camera->setPixelColors(world);
+        camera->render();
     }
 }
 
 void Screen::destroy()
 {
-    delete image;
     delete camera;
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(mainWindow);
     SDL_Quit();
 }
 
-void Screen::eventProcess()
-{
+void Screen::eventProcess() {
     SDL_Event event;
 
-    while (SDL_PollEvent(&event))
-    {
-        if (event.type == SDL_QUIT)
-        {
+    while (SDL_PollEvent(&event)) {
+        if (event.type == SDL_QUIT) {
             isRunning = false;
         }
     }
-}
-
-void Screen::render()
-{
-
 }
