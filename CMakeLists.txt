@@ -11,8 +11,6 @@ include_directories(${SDL2_INCLUDE_DIR})
 add_executable(SDL_RayTracing src/main.cpp
         src/Screen.cpp
         src/Screen.h
-        src/Image.cpp
-        src/Image.h
         src/Ray.cpp
         src/Ray.h
         src/Camera.cpp
