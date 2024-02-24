@@ -15,6 +15,7 @@ public:
     int windowWidth;
     int windowHeight;
     int samplesPerPixel;
+    int maxDepth;
 
     class SDL_Texture* texture;
     SDL_Renderer* renderer;
@@ -37,9 +38,15 @@ public:
     void render();
 private:
     void init();
-    glm::vec3 rayColor(const class Ray& ray, const class Hittable& world);
+    glm::vec3 rayColor(const class Ray& ray, int depth, const class Hittable& world);
     class Ray getRay(int x, int y);
     glm::vec3 pixelSampleSquare() const;
+
+    static glm::vec3 randomVector();
+    static glm::vec3 randomVector(double min, double max);
+    static glm::vec3 randomPointInUnitSphere();
+    static glm::vec3 randomUnitVector();
+    static glm::vec3 random_on_hemisphere(const glm::vec3& normal);
 };
 
 

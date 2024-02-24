@@ -17,7 +17,8 @@ Camera::Camera(int _windowWidth, int _windowHeight, SDL_Renderer* renderer) :
     viewportHeight(2.f),
     cameraCenter(0, 0, 0),
     renderer(renderer),
-    samplesPerPixel(20)
+    samplesPerPixel(5),
+    maxDepth(5)
 {
     init();
 }
@@ -44,11 +45,18 @@ void Camera::init()
     centeredPixelLoc = viewportUpperLeft + 0.5f * (pixelDeltaU + pixelDeltaV);
 }
 
-glm::vec3 Camera::rayColor(const Ray &ray, const class Hittable& world)
+glm::vec3 Camera::rayColor(const Ray &ray, int depth, const class Hittable& world)
 {
     HitInfo hitInfo;
-    if (world.isHit(ray, 0, infinity, hitInfo)) {
-        return 0.5f * (hitInfo.normal + glm::vec3(1,1,1));
+    if (depth <= 0)
+    {
+        return {0,0,0};
+    }
+
+    if (world.isHit(ray, 0.001, infinity, hitInfo))
+    {
+        glm::vec3 direction = random_on_hemisphere(hitInfo.normal);
+        return 0.5f * rayColor(Ray(hitInfo.p, direction), depth -1, world);
     }
 
     glm::vec3 unitDirection = glm::normalize(ray.getDirection());
@@ -68,7 +76,7 @@ void Camera::setPixelColors(const Hittable &world)
             {
                 /** Anti-aliasing to smooth color transition */
                 Ray r = getRay(x, y);
-                pixelColorVector += rayColor(r, world);
+                pixelColorVector += rayColor(r, maxDepth, world);
             }
 
             pixelColorVector /= samplesPerPixel;
@@ -115,4 +123,50 @@ class Ray Camera::getRay(int x, int y)
     auto rayDirection = pixelSample - rayOrigin;
 
     return Ray(rayOrigin, rayDirection);
+}
+
+glm::vec3 Camera::randomVector()
+{
+    return {-0.5 + rand() / (RAND_MAX + 1.0),
+            -0.5 + rand() / (RAND_MAX + 1.0),
+            -0.5 + rand() / (RAND_MAX + 1.0)};
+}
+
+glm::vec3 Camera::randomVector(double min, double max)
+{
+    return {min + (max-min)*(-0.5 + rand() / (RAND_MAX + 1.0)),
+            min + (max-min)*(-0.5 + rand() / (RAND_MAX + 1.0)),
+            min + (max-min)*(-0.5 + rand() / (RAND_MAX + 1.0))
+    };
+}
+
+glm::vec3 Camera::randomPointInUnitSphere()
+{
+    while (true)
+    {
+        glm::vec3 pointInSphere = randomVector(-1, 1);
+
+        if (glm::dot(pointInSphere, pointInSphere) < 1.f)
+        {
+            return pointInSphere;
+        }
+    }
+}
+
+glm::vec3 Camera::randomUnitVector()
+{
+    return glm::normalize(randomPointInUnitSphere());
+}
+
+glm::vec3 Camera::random_on_hemisphere(const glm::vec3 &normal)
+{
+    glm::vec3 on_unit_sphere = randomUnitVector();
+    if (dot(on_unit_sphere, normal) > 0.0) // In the same hemisphere as the normal
+    {
+        return on_unit_sphere;
+    }
+    else
+    {
+        return -on_unit_sphere;
+    }
 }
