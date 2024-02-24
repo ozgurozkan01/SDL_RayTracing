@@ -2,7 +2,7 @@
 // Created by ozgur on 19/02/2024.
 //
 
-#include <iostream>
+#include <cstdlib>
 #include "Camera.h"
 #include "Ray.h"
 #include "Hittable.h"
@@ -16,7 +16,8 @@ Camera::Camera(int _windowWidth, int _windowHeight, SDL_Renderer* renderer) :
     focalLength(1.f),
     viewportHeight(2.f),
     cameraCenter(0, 0, 0),
-    renderer(renderer)
+    renderer(renderer),
+    samplesPerPixel(20)
 {
     init();
 }
@@ -61,14 +62,19 @@ void Camera::setPixelColors(const Hittable &world)
     {
         for (int x = 0; x < windowWidth; ++x)
         {
-            auto pixelCenter = centeredPixelLoc + ((float)x * pixelDeltaU) + ((float)y * pixelDeltaV);
-            auto rayDirection = pixelCenter - cameraCenter;
-            Ray r(cameraCenter, rayDirection);
+            glm::vec3 pixelColorVector(0, 0, 0);
 
-            glm::vec3 pixelColorVector = rayColor(r, world);
-            int red = static_cast<int>(255.999 * pixelColorVector.r);
-            int green = static_cast<int>(255.999 * pixelColorVector.g);
-            int blue = static_cast<int>(255.999 * pixelColorVector.b);
+            for (int i = 0; i < samplesPerPixel; ++i)
+            {
+                /** Anti-aliasing to smooth color transition */
+                Ray r = getRay(x, y);
+                pixelColorVector += rayColor(r, world);
+            }
+
+            pixelColorVector /= samplesPerPixel;
+            int red = static_cast<int>(255 * pixelColorVector.r);
+            int green = static_cast<int>(255 * pixelColorVector.g);
+            int blue = static_cast<int>(255 * pixelColorVector.b);
             int alpha = 255;
 
             uint32_t pixelColor = (red << 24) | (green << 16) | (blue << 8) | alpha;
@@ -90,4 +96,23 @@ Camera::~Camera()
 {
     delete [] imagePixels;
     SDL_DestroyTexture(texture);
+}
+
+glm::vec3 Camera::pixelSampleSquare() const
+{
+    // Returns a random point in the square surrounding a pixel at the origin.
+    auto px = -0.5 + rand() / (RAND_MAX + 1.0);
+    auto py = -0.5 + rand() / (RAND_MAX + 1.0);
+    return ((float)px * pixelDeltaU) + ((float)py * pixelDeltaV);
+}
+
+class Ray Camera::getRay(int x, int y)
+{
+    auto pixelCenter = centeredPixelLoc + ((float)x * pixelDeltaU) + ((float)y * pixelDeltaV);
+    auto pixelSample = pixelCenter + pixelSampleSquare();
+
+    auto rayOrigin = cameraCenter;
+    auto rayDirection = pixelSample - rayOrigin;
+
+    return Ray(rayOrigin, rayDirection);
 }

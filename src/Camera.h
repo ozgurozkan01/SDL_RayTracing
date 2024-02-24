@@ -11,8 +11,10 @@ class Camera {
 public:
     Camera(int _windowWidth, int _windowHeight, class SDL_Renderer* renderer);
     ~Camera();
+
     int windowWidth;
     int windowHeight;
+    int samplesPerPixel;
 
     class SDL_Texture* texture;
     SDL_Renderer* renderer;
@@ -36,6 +38,8 @@ public:
 private:
     void init();
     glm::vec3 rayColor(const class Ray& ray, const class Hittable& world);
+    class Ray getRay(int x, int y);
+    glm::vec3 pixelSampleSquare() const;
 };
 
 
