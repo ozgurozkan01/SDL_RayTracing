@@ -64,3 +64,6 @@
 1243	1353	7305825373741874	SDL_RayTracing.exe	5d0b8be930f7985f
 4	1224	7305825658669213	CMakeFiles/SDL_RayTracing.dir/src/Screen.cpp.obj	f478d43c1acb21e5
 1225	1328	7305825659679568	SDL_RayTracing.exe	5d0b8be930f7985f
+8	1049	7305831050324330	CMakeFiles/SDL_RayTracing.dir/src/Camera.cpp.obj	f25e6b0459a52fb3
+3	1314	7305831052980218	CMakeFiles/SDL_RayTracing.dir/src/Screen.cpp.obj	f478d43c1acb21e5
+1315	1424	7305831054047566	SDL_RayTracing.exe	5d0b8be930f7985f

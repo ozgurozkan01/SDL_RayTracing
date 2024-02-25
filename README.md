@@ -7,7 +7,7 @@ Ray Tracing with SDL to develop myself in graphic engine basics. In project, wit
 * Ray Tracing One Weekend Doc ( First Chapter Of 3 ) -> URL : https://raytracing.github.io/
 
 # How it looks                                                                                    
-![Ekran görüntüsü 2024-02-24 215753](https://github.com/ozgurozkan01/SDL_RayTracing/assets/90643276/e20727df-eccf-42d9-bf4a-06b20ce895bb)
+![Ekran görüntüsü 2024-02-25 195238](https://github.com/ozgurozkan01/SDL_RayTracing/assets/90643276/006947db-1045-460d-a184-a1df11771f5e)
 
 ## Dependencies
 * SDL2
