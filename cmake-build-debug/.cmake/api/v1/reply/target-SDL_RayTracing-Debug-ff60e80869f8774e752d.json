@@ -35,7 +35,7 @@
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 28,
+				"line" : 29,
 				"parent" : 0
 			},
 			{
@@ -157,7 +157,8 @@
 				8,
 				10,
 				12,
-				14
+				14,
+				15
 			]
 		}
 	],
@@ -244,6 +245,11 @@
 		{
 			"backtrace" : 1,
 			"path" : "src/Material.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "src/Vector3.h",
 			"sourceGroupIndex" : 1
 		}
 	],
