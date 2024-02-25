@@ -10,11 +10,16 @@ Screen::Screen() :
     WINDOW_NAME("SDL_RayTracing"),
     isRunning(true),
     aspectRatio(16.f / 9.f),
-    WINDOW_WIDTH(1280),
-    sphereRef(glm::vec3(0,0,-1), 0.5f),
-    sphereRef2(glm::vec3(0,-100.5,-1), 100),
+    WINDOW_WIDTH(480),
+    groundMaterial(Lambertian(glm::vec3(0.8, 0.8, 0.8))),
+    centerMaterial(Lambertian(glm::vec3(0.7, 0.3, 0.3))),
+    leftMaterial(Metal(glm::vec3(0.8, 0.8, 0.8))),
+    rightMaterial(Metal(glm::vec3(0.8, 0.6, 0.2))),
+    sphereRef(Sphere(glm::vec3(0,-100.5,-1), 100.f, &groundMaterial)),
+    sphereRef2(Sphere(glm::vec3( 0.0,    0.0, -1.0),   0.5,  &centerMaterial)),
+    sphereRef3(Sphere(glm::vec3(-1.0,0,-1), 0.5f, &leftMaterial)),
+    sphereRef4(Sphere(glm::vec3(1.0,0,-1), 0.5f, &rightMaterial)),
     world()
-
 {
     init();
 }
@@ -28,6 +33,8 @@ bool Screen::init()
 {
     world.add(&sphereRef);
     world.add(&sphereRef2);
+    world.add(&sphereRef3);
+    world.add(&sphereRef4);
 
     WINDOW_HEIGHT = WINDOW_WIDTH / aspectRatio;
     WINDOW_HEIGHT = (WINDOW_HEIGHT < 1) ? 1 : WINDOW_HEIGHT;

@@ -15,7 +15,7 @@ public:
     [[nodiscard]] glm::vec3 getOrigin() const;
     [[nodiscard]] glm::vec3 getDirection() const;
     [[nodiscard]] glm::vec3 at(float t) const;
-
+    [[nodiscard]] static glm::vec3 reflect(const glm::vec3& v, const glm::vec3& n) ;
 private:
     glm::vec3 origin;
     glm::vec3 direction;

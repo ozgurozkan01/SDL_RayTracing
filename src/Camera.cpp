@@ -1,12 +1,14 @@
 //
 // Created by ozgur on 19/02/2024.
 //
-
+#include "SDL2/SDL.h"
 #include <cstdlib>
+
 #include "Camera.h"
 #include "Ray.h"
 #include "Hittable.h"
-#include "SDL2/SDL.h"
+#include "Sphere.h"
+#include "Material.h"
 
 const double infinity = std::numeric_limits<double>::infinity();
 
@@ -17,15 +19,15 @@ Camera::Camera(int _windowWidth, int _windowHeight, SDL_Renderer* renderer) :
     viewportHeight(2.f),
     cameraCenter(0, 0, 0),
     renderer(renderer),
-    samplesPerPixel(5),
-    maxDepth(5)
+    samplesPerPixel(50),
+    maxDepth(25)
 {
     init();
 }
 
 void Camera::init()
 {
-    imagePixels = new uint32_t[windowWidth * windowHeight];
+    pixels = new uint32_t[windowWidth * windowHeight];
     texture = SDL_CreateTexture(renderer,
                                 SDL_PIXELFORMAT_RGBA8888,
                                 SDL_TEXTUREACCESS_STATIC,
@@ -48,6 +50,7 @@ void Camera::init()
 glm::vec3 Camera::rayColor(const Ray &ray, int depth, const class Hittable& world)
 {
     HitInfo hitInfo;
+
     if (depth <= 0)
     {
         return {0,0,0};
@@ -55,12 +58,18 @@ glm::vec3 Camera::rayColor(const Ray &ray, int depth, const class Hittable& worl
 
     if (world.isHit(ray, 0.001, infinity, hitInfo))
     {
-        glm::vec3 direction = random_on_hemisphere(hitInfo.normal);
-        return 0.5f * rayColor(Ray(hitInfo.p, direction), depth -1, world);
+        Ray scatteredRay;
+        glm::vec3 attenuation;
+        if (hitInfo.material->scatter(ray, hitInfo, attenuation, scatteredRay))
+        {
+            return attenuation * rayColor(scatteredRay, depth-1, world);
+        }
+
+        return {0, 0, 0};
     }
 
     glm::vec3 unitDirection = glm::normalize(ray.getDirection());
-    auto a = 0.5*(unitDirection.y + 1.0);
+    float a = 0.5f * (unitDirection.y + 1.0f);
     return ((1.0f - (float)a) * glm::vec3(1.0, 1.0, 1.0)) + ((float)a * glm::vec3(0.5, 0.7, 1.0));
 }
 
@@ -80,13 +89,14 @@ void Camera::setPixelColors(const Hittable &world)
             }
 
             pixelColorVector /= samplesPerPixel;
+            pixelColorVector = glm::vec3(sqrt(pixelColorVector.r), sqrt(pixelColorVector.g), sqrt(pixelColorVector.b));
             int red = static_cast<int>(255 * pixelColorVector.r);
             int green = static_cast<int>(255 * pixelColorVector.g);
             int blue = static_cast<int>(255 * pixelColorVector.b);
             int alpha = 255;
 
             uint32_t pixelColor = (red << 24) | (green << 16) | (blue << 8) | alpha;
-            imagePixels[x + y * windowWidth] = pixelColor;
+            pixels[x + y * windowWidth] = pixelColor;
         }
     }
 }
@@ -94,7 +104,7 @@ void Camera::setPixelColors(const Hittable &world)
 
 void Camera::render()
 {
-    SDL_UpdateTexture(texture, nullptr, imagePixels, windowWidth * sizeof(uint32_t));
+    SDL_UpdateTexture(texture, nullptr, pixels, windowWidth * sizeof(uint32_t));
     SDL_RenderClear(renderer);
     SDL_RenderCopy(renderer, texture, nullptr, nullptr);
     SDL_RenderPresent(renderer);
@@ -102,7 +112,7 @@ void Camera::render()
 
 Camera::~Camera()
 {
-    delete [] imagePixels;
+    delete [] pixels;
     SDL_DestroyTexture(texture);
 }
 
@@ -114,7 +124,7 @@ glm::vec3 Camera::pixelSampleSquare() const
     return ((float)px * pixelDeltaU) + ((float)py * pixelDeltaV);
 }
 
-class Ray Camera::getRay(int x, int y)
+Ray Camera::getRay(int x, int y)
 {
     auto pixelCenter = centeredPixelLoc + ((float)x * pixelDeltaU) + ((float)y * pixelDeltaV);
     auto pixelSample = pixelCenter + pixelSampleSquare();
@@ -123,50 +133,4 @@ class Ray Camera::getRay(int x, int y)
     auto rayDirection = pixelSample - rayOrigin;
 
     return Ray(rayOrigin, rayDirection);
-}
-
-glm::vec3 Camera::randomVector()
-{
-    return {-0.5 + rand() / (RAND_MAX + 1.0),
-            -0.5 + rand() / (RAND_MAX + 1.0),
-            -0.5 + rand() / (RAND_MAX + 1.0)};
-}
-
-glm::vec3 Camera::randomVector(double min, double max)
-{
-    return {min + (max-min)*(-0.5 + rand() / (RAND_MAX + 1.0)),
-            min + (max-min)*(-0.5 + rand() / (RAND_MAX + 1.0)),
-            min + (max-min)*(-0.5 + rand() / (RAND_MAX + 1.0))
-    };
-}
-
-glm::vec3 Camera::randomPointInUnitSphere()
-{
-    while (true)
-    {
-        glm::vec3 pointInSphere = randomVector(-1, 1);
-
-        if (glm::dot(pointInSphere, pointInSphere) < 1.f)
-        {
-            return pointInSphere;
-        }
-    }
-}
-
-glm::vec3 Camera::randomUnitVector()
-{
-    return glm::normalize(randomPointInUnitSphere());
-}
-
-glm::vec3 Camera::random_on_hemisphere(const glm::vec3 &normal)
-{
-    glm::vec3 on_unit_sphere = randomUnitVector();
-    if (dot(on_unit_sphere, normal) > 0.0) // In the same hemisphere as the normal
-    {
-        return on_unit_sphere;
-    }
-    else
-    {
-        return -on_unit_sphere;
-    }
 }

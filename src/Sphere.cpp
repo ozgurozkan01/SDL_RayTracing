@@ -34,3 +34,51 @@ bool Sphere::isHit(const Ray &ray, double ray_tmin, double ray_tmax, HitInfo &hi
 
     return true;
 }
+
+
+glm::vec3 Sphere::randomVector()
+{
+    return {-0.5 + rand() / (RAND_MAX + 1.0),
+            -0.5 + rand() / (RAND_MAX + 1.0),
+            -0.5 + rand() / (RAND_MAX + 1.0)};
+}
+
+glm::vec3 Sphere::randomVector(double min, double max)
+{
+    return {min + (max-min)*(-0.5 + rand() / (RAND_MAX + 1.0)),
+            min + (max-min)*(-0.5 + rand() / (RAND_MAX + 1.0)),
+            min + (max-min)*(-0.5 + rand() / (RAND_MAX + 1.0))
+    };
+}
+
+glm::vec3 Sphere::randomPointInUnitSphere()
+{
+    while (true)
+    {
+        glm::vec3 pointInSphere = randomVector(-1, 1);
+
+        if (glm::dot(pointInSphere, pointInSphere) < 1.f)
+        {
+            return pointInSphere;
+        }
+    }
+}
+
+glm::vec3 Sphere::randomUnitVector()
+{
+    return glm::normalize(randomPointInUnitSphere());
+}
+
+glm::vec3 Sphere::randomOnHemisphere(const glm::vec3 &normal)
+{
+    glm::vec3 onUnitSphere = randomUnitVector();
+    // In the same hemisphere as the normal
+    if (dot(onUnitSphere, normal) > 0.0) { return onUnitSphere; }
+    else { return -onUnitSphere; }
+}
+
+bool Sphere::isDirectionNearZero(const glm::vec3 &direction)
+{
+    double overLimit = 1e-8;
+    return (abs(direction.x) < overLimit) && (abs(direction.y) < overLimit) && (abs(direction.z) < overLimit);
+}

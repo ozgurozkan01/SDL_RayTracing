@@ -9,6 +9,7 @@
 #include "Camera.h"
 #include "Sphere.h"
 #include "HittableCollection.h"
+#include "Material.h"
 
 class Screen {
 private:
@@ -19,6 +20,14 @@ private:
 
     Sphere sphereRef;
     Sphere sphereRef2;
+    Sphere sphereRef3;
+    Sphere sphereRef4;
+
+    Lambertian groundMaterial;
+    Lambertian centerMaterial;
+    Metal leftMaterial;
+    Metal rightMaterial;
+
     HittableCollection world;
 
     bool isRunning;

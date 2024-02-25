@@ -19,3 +19,7 @@ glm::vec3 Ray::getDirection() const {
 glm::vec3 Ray::at(float t) const {
     return origin + (t * direction);
 }
+
+glm::vec3 Ray::reflect(const glm::vec3 &v, const glm::vec3 &n) {
+    return v - 2*glm::dot(v, n) * n;
+}

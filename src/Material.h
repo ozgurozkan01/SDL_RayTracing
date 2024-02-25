@@ -10,12 +10,28 @@
 struct HitInfo;
 
 class Material {
-    Material() = delete;
-    virtual ~Material() = delete;
-
+public:
     virtual bool scatter(
-            const Ray& r_in, const HitInfo& rec, glm::vec3& attenuation, Ray& scattered) const = 0;
+            const Ray& r_in, const HitInfo& hitInfo, glm::vec3& attenuation, Ray& scatteredRay) const = 0;
 };
 
+class Lambertian : public Material
+{
+public:
+    explicit Lambertian(const glm::vec3& color);
+    bool scatter(const Ray& r_in, const HitInfo& hitInfo, glm::vec3& attenuation, Ray& scatteredRay) const override;
+private:
+    glm::vec3 albedo;
+};
+
+
+class Metal : public Material
+{
+public:
+    explicit Metal(const glm::vec3& color);
+    bool scatter(const Ray& r_in, const HitInfo& hitInfo, glm::vec3& attenuation, Ray& scatteredRay) const override;
+private:
+    glm::vec3 albedo;
+};
 
 #endif //SDL_RAYTRACING_MATERIAL_H
