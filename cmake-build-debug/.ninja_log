@@ -13,3 +13,10 @@
 14	1719	7304283753045178	CMakeFiles/SDL_RayTracing.dir/src/Hittable.cpp.obj	d287e0dfbced4188
 38	1787	7304283753738549	CMakeFiles/SDL_RayTracing.dir/src/Sphere.cpp.obj	ff98ddededd16ffc
 33	1980	7304283755675392	CMakeFiles/SDL_RayTracing.dir/src/HittableCollection.cpp.obj	dfd9e42793575a8
+22	1573	7305561899468719	CMakeFiles/SDL_RayTracing.dir/src/Material.cpp.obj	541963792e8f5d5c
+19	1578	7305561899498742	CMakeFiles/SDL_RayTracing.dir/src/Hittable.cpp.obj	d287e0dfbced4188
+11	1588	7305561899615627	CMakeFiles/SDL_RayTracing.dir/src/Sphere.cpp.obj	ff98ddededd16ffc
+15	1875	7305561902483957	CMakeFiles/SDL_RayTracing.dir/src/Camera.cpp.obj	f25e6b0459a52fb3
+25	1903	7305561902776988	CMakeFiles/SDL_RayTracing.dir/src/HittableCollection.cpp.obj	dfd9e42793575a8
+4	1985	7305561903603202	CMakeFiles/SDL_RayTracing.dir/src/main.cpp.obj	e8dc8445c1b05cf0
+8	987	7305562212452844	CMakeFiles/SDL_RayTracing.dir/src/Sphere.cpp.obj	ff98ddededd16ffc

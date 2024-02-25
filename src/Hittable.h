@@ -8,11 +8,15 @@
 #include "Ray.h"
 #include "GLM/glm/glm.hpp"
 
+class Material;
+
 struct HitInfo
 {
     glm::vec3 p;
     glm::vec3 normal;
     double t;
+
+    Material* material;
 
     bool frontFace;
 

@@ -1,7 +1,7 @@
 #include "Sphere.h"
 
-Sphere::Sphere(glm::vec3 _center, float _radius)
-        : center(_center), radius(_radius)
+Sphere::Sphere(glm::vec3 _center, float _radius, Material* material)
+        : center(_center), radius(_radius), material(material)
 {}
 
 bool Sphere::isHit(const Ray &ray, double ray_tmin, double ray_tmax, HitInfo &hitInfo) const
@@ -26,6 +26,7 @@ bool Sphere::isHit(const Ray &ray, double ray_tmin, double ray_tmax, HitInfo &hi
 
     hitInfo.t = root;
     hitInfo.p = ray.at((float)hitInfo.t);
+    hitInfo.material = material;
 
     glm::vec3 outwardNormal = (hitInfo.p - center) / radius;
     glm::normalize(outwardNormal);

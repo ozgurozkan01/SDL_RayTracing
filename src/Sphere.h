@@ -11,12 +11,13 @@
 class Sphere : public Hittable{
 public:
 public:
-    Sphere(glm::vec3 _center, float _radius);
+    Sphere(glm::vec3 _center, float _radius, Material* material);
 
     bool isHit(const Ray& ray, double ray_tmin, double ray_tmax, HitInfo& hitInfo) const override;
 private:
     float radius;
     glm::vec3 center;
+    Material* material;
 };
 
 
