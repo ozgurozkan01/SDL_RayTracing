@@ -21,6 +21,8 @@ add_executable(SDL_RayTracing src/main.cpp
         src/Sphere.h
         src/HittableCollection.cpp
         src/HittableCollection.h
+        src/Material.cpp
+        src/Material.h
 )
 
 target_link_libraries(SDL_RayTracing ${SDL2_LIBRARY} -lmingw32 -lSDL2main -lSDL2 -mwindows)
