@@ -19,8 +19,8 @@ Camera::Camera(int _windowWidth, int _windowHeight, SDL_Renderer* renderer) :
     viewportHeight(2.f),
     cameraCenter(0, 0, 0),
     renderer(renderer),
-    samplesPerPixel(50),
-    maxDepth(25)
+    samplesPerPixel(30),
+    maxDepth(10)
 {
     init();
 }

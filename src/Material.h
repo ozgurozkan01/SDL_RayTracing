@@ -28,10 +28,11 @@ private:
 class Metal : public Material
 {
 public:
-    explicit Metal(const glm::vec3& color);
+    explicit Metal(const glm::vec3& color, double fuzz);
     bool scatter(const Ray& r_in, const HitInfo& hitInfo, glm::vec3& attenuation, Ray& scatteredRay) const override;
 private:
     glm::vec3 albedo;
+    double fuzz;
 };
 
 #endif //SDL_RAYTRACING_MATERIAL_H
