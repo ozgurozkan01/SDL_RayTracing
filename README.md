@@ -11,4 +11,3 @@ Ray Tracing with SDL to develop myself in graphic engine basics. In project, wit
 
 ## Dependencies
 * SDL2
-* OpenGL Math (glm)
