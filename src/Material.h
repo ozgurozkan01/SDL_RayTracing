@@ -36,4 +36,13 @@ private:
     double fuzz;
 };
 
+class Dielectric : public Material
+{
+public:
+    explicit Dielectric(double refractionIndex);
+    bool scatter(const Ray& r_in, const HitInfo& hitInfo, Vector3& attenuation, Ray& scatteredRay) const override;
+private:
+    double refractionIndex;
+};
+
 #endif //SDL_RAYTRACING_MATERIAL_H

@@ -13,8 +13,8 @@ Screen::Screen() :
     WINDOW_WIDTH(720),
     // Materials
     groundMaterial(Lambertian(Vector3(0.8, 0.8, 0.8))),
-    centerMaterial(Lambertian(Vector3(0.7, 0.3, 0.3))),
-    leftMaterial(Metal(Vector3(0.8, 0.8, 0.8), 0.3)),
+    centerMaterial(Dielectric(.5)),
+    leftMaterial(Dielectric(.1)),
     rightMaterial(Metal(Vector3(0.8, 0.6, 0.2), 1.0)),
     // Objects
     sphereRef(Sphere(Vector3(0,-100.5,-1), 100.f, &groundMaterial)),

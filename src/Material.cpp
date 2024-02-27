@@ -33,3 +33,19 @@ bool Metal::scatter(const Ray &r_in, const HitInfo &hitInfo, Vector3 &attenuatio
     attenuation = albedo;
     return dot(scatteredRay.getDirection(), hitInfo.normal) > 0;
 }
+
+Dielectric::Dielectric(double refractionIndex) : refractionIndex(refractionIndex)
+{
+
+}
+
+bool Dielectric::scatter(const Ray &r_in, const HitInfo &hitInfo, Vector3 &attenuation, Ray &scatteredRay) const
+{
+    attenuation = Vector3(1.0, 1.0, 1.0);
+    double refractionRatio = hitInfo.frontFace ? (1.0 / refractionIndex) : refractionIndex;
+    Vector3 unitDirection = normalize(r_in.getDirection());
+    Vector3 refracted = refract(unitDirection, hitInfo.normal, refractionRatio);
+
+    scatteredRay = Ray(hitInfo.p, refracted);
+    return true;
+}

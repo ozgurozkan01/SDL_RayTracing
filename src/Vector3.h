@@ -161,4 +161,12 @@ inline bool isDirectionNearZero(const Vector3 &direction)
     double overLimit = 1e-8;
     return (abs(direction.x()) < overLimit) && (abs(direction.y()) < overLimit) && (abs(direction.z()) < overLimit);
 }
+
+inline Vector3 refract(const Vector3& uv, const Vector3& n, double etaiOverEta) {
+    auto cosTheta = fmin(dot(-uv, n), 1.0);
+    Vector3 rayPerp = etaiOverEta * (uv + cosTheta * n);
+    Vector3 rayParallel = -sqrt(fabs(1.0 - rayPerp.dotProduct())) * n;
+    return rayPerp + rayParallel;
+}
+
 #endif //SDL_RAYTRACING_VECTOR3_H
