@@ -31,3 +31,8 @@
 1223	1327	7307723571425868	SDL_RayTracing.exe	5d0b8be930f7985f
 5	1496	7307724429431718	CMakeFiles/SDL_RayTracing.dir/src/Screen.cpp.obj	f478d43c1acb21e5
 1496	1641	7307724430841143	SDL_RayTracing.exe	5d0b8be930f7985f
+3	490	7307743934687328	CMakeFiles/SDL_RayTracing.dir/src/Material.cpp.obj	541963792e8f5d5c
+491	611	7307743935860045	SDL_RayTracing.exe	5d0b8be930f7985f
+4	1108	7307744939877792	CMakeFiles/SDL_RayTracing.dir/src/main.cpp.obj	e8dc8445c1b05cf0
+8	1139	7307744940203639	CMakeFiles/SDL_RayTracing.dir/src/Screen.cpp.obj	f478d43c1acb21e5
+1139	1245	7307744941206397	SDL_RayTracing.exe	5d0b8be930f7985f

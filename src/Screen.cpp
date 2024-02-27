@@ -12,9 +12,9 @@ Screen::Screen() :
     aspectRatio(16.f / 9.f),
     WINDOW_WIDTH(720),
     // Materials
-    groundMaterial(Lambertian(Vector3(0.8, 0.8, 0.8))),
-    centerMaterial(Dielectric(.5)),
-    leftMaterial(Dielectric(.1)),
+    groundMaterial(Lambertian(Vector3(0.3, 0.8, 0.4))),
+    centerMaterial(Lambertian(Vector3(0.1, 0.2, 0.5))),
+    leftMaterial(Dielectric(1.5)),
     rightMaterial(Metal(Vector3(0.8, 0.6, 0.2), 1.0)),
     // Objects
     sphereRef(Sphere(Vector3(0,-100.5,-1), 100.f, &groundMaterial)),

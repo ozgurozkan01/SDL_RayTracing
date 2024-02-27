@@ -24,7 +24,7 @@ private:
     Sphere sphereRef4;
 
     Lambertian groundMaterial;
-    Dielectric centerMaterial;
+    Lambertian centerMaterial;
     Dielectric leftMaterial;
     Metal rightMaterial;
 

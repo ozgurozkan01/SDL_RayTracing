@@ -35,17 +35,25 @@ bool Metal::scatter(const Ray &r_in, const HitInfo &hitInfo, Vector3 &attenuatio
 }
 
 Dielectric::Dielectric(double refractionIndex) : refractionIndex(refractionIndex)
-{
-
-}
+{}
 
 bool Dielectric::scatter(const Ray &r_in, const HitInfo &hitInfo, Vector3 &attenuation, Ray &scatteredRay) const
 {
+
     attenuation = Vector3(1.0, 1.0, 1.0);
     double refractionRatio = hitInfo.frontFace ? (1.0 / refractionIndex) : refractionIndex;
     Vector3 unitDirection = normalize(r_in.getDirection());
-    Vector3 refracted = refract(unitDirection, hitInfo.normal, refractionRatio);
 
-    scatteredRay = Ray(hitInfo.p, refracted);
+    double cosTheta = fmin(dot(-unitDirection, hitInfo.normal), 1.0);
+    double sinTheta = sqrt(1.0 - cosTheta * cosTheta);
+
+    bool cannotRefract = refractionRatio * sinTheta > 1.0;
+    Vector3 direction;
+
+    if (cannotRefract)
+        direction = Ray::reflect(unitDirection, hitInfo.normal);
+    else
+        direction = refract(unitDirection, hitInfo.normal, refractionRatio);
+    scatteredRay = Ray(hitInfo.p, direction);
     return true;
 }
