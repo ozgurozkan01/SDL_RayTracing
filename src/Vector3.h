@@ -111,8 +111,54 @@ inline Vector3 cross(const Vector3 &u, const Vector3 &v) {
                 u.coordinates[0] * v.coordinates[1] - u.coordinates[1] * v.coordinates[0]);
 }
 
-inline Vector3 unit_vector(Vector3 v) {
+inline Vector3 normalize(Vector3 v) {
     return v / v.length();
 }
 
+inline Vector3 randomVector()
+{
+    return {-0.5 + rand() / (RAND_MAX + 1.0),
+            -0.5 + rand() / (RAND_MAX + 1.0),
+            -0.5 + rand() / (RAND_MAX + 1.0)};
+}
+
+inline Vector3 randomVector(double min, double max)
+{
+    return {min + (max-min)*(-0.5 + rand() / (RAND_MAX + 1.0)),
+            min + (max-min)*(-0.5 + rand() / (RAND_MAX + 1.0)),
+            min + (max-min)*(-0.5 + rand() / (RAND_MAX + 1.0))
+    };
+}
+
+inline Vector3 randomPointInUnitSphere()
+{
+    while (true)
+    {
+        Vector3 pointInSphere = randomVector(-1, 1);
+
+        if (dot(pointInSphere, pointInSphere) < 1.f)
+        {
+            return pointInSphere;
+        }
+    }
+}
+
+inline Vector3 randomUnitVector()
+{
+    return normalize(randomPointInUnitSphere());
+}
+
+inline Vector3 randomOnHemisphere(const Vector3 &normal)
+{
+    Vector3 onUnitSphere = randomUnitVector();
+    // In the same hemisphere as the normal
+    if (dot(onUnitSphere, normal) > 0.0) { return onUnitSphere; }
+    else { return -onUnitSphere; }
+}
+
+inline bool isDirectionNearZero(const Vector3 &direction)
+{
+    double overLimit = 1e-8;
+    return (abs(direction.x()) < overLimit) && (abs(direction.y()) < overLimit) && (abs(direction.z()) < overLimit);
+}
 #endif //SDL_RAYTRACING_VECTOR3_H
