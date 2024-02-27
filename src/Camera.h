@@ -5,7 +5,7 @@
 #ifndef SDL_RAYTRACING_CAMERA_H
 #define SDL_RAYTRACING_CAMERA_H
 
-#include "GLM/glm/glm.hpp"
+#include "Vector3.h"
 
 class Camera {
 public:
@@ -24,23 +24,23 @@ public:
     double viewportHeight;
     double viewportWidth;
 
-    glm::vec3 viewportUpperLeft;
-    glm::vec3 centeredPixelLoc;
-    glm::vec3 viewportU;
-    glm::vec3 viewportV;
-    glm::vec3 pixelDeltaU;
-    glm::vec3 pixelDeltaV;
+    Vector3 viewportUpperLeft;
+    Vector3 centeredPixelLoc;
+    Vector3 viewportU;
+    Vector3 viewportV;
+    Vector3 pixelDeltaU;
+    Vector3 pixelDeltaV;
 
-    glm::vec3 cameraCenter;
+    Vector3 cameraCenter;
     double focalLength;
 
     void setPixelColors(const class Hittable& world);
     void render();
 private:
     void init();
-    glm::vec3 rayColor(const class Ray& ray, int depth, const class Hittable& world);
+    Vector3 rayColor(const class Ray& ray, int depth, const class Hittable& world);
     Ray getRay(int x, int y);
-    [[nodiscard]] glm::vec3 pixelSampleSquare() const;
+    [[nodiscard]] Vector3 pixelSampleSquare() const;
 };
 
 

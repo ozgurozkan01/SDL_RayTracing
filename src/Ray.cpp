@@ -4,22 +4,22 @@
 
 #include "Ray.h"
 
-Ray::Ray(const glm::vec3 &_origin, const glm::vec3 &_direction):
+Ray::Ray(const Vector3 &_origin, const Vector3 &_direction):
     origin(_origin),
     direction(_direction) {}
 
-glm::vec3 Ray::getOrigin() const {
+Vector3 Ray::getOrigin() const {
     return origin;
 }
 
-glm::vec3 Ray::getDirection() const {
+Vector3 Ray::getDirection() const {
     return direction;
 }
 
-glm::vec3 Ray::at(float t) const {
+Vector3 Ray::at(float t) const {
     return origin + (t * direction);
 }
 
-glm::vec3 Ray::reflect(const glm::vec3 &v, const glm::vec3 &n) {
-    return v - 2*glm::dot(v, n) * n;
+Vector3 Ray::reflect(const Vector3 &v, const Vector3 &n) {
+    return v - 2 * dot(v, n) * n;
 }

@@ -6,21 +6,21 @@
 #define SDL_RAYTRACING_HITTABLE_H
 
 #include "Ray.h"
-#include "GLM/glm/glm.hpp"
+#include "Vector3.h"
 
 class Material;
 
 struct HitInfo
 {
-    glm::vec3 p;
-    glm::vec3 normal;
+    Vector3 p;
+    Vector3 normal;
     double t;
 
     Material* material;
 
     bool frontFace;
 
-    void setFaceNormal(const Ray& r, const glm::vec3& outwardNormal)
+    void setFaceNormal(const Ray& r, const Vector3& outwardNormal)
     {
         // Sets the hit record normal vector.
         // NOTE: the parameter `outwardNormal` is assumed to have unit length.

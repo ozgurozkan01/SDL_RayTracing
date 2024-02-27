@@ -11,14 +11,17 @@ Screen::Screen() :
     isRunning(true),
     aspectRatio(16.f / 9.f),
     WINDOW_WIDTH(720),
-    groundMaterial(Lambertian(glm::vec3(0.8, 0.8, 0.8))),
-    centerMaterial(Lambertian(glm::vec3(0.7, 0.3, 0.3))),
-    leftMaterial(Metal(glm::vec3(0.8, 0.8, 0.8), 0.3)),
-    rightMaterial(Metal(glm::vec3(0.8, 0.6, 0.2), 1.0)),
-    sphereRef(Sphere(glm::vec3(0,-100.5,-1), 100.f, &groundMaterial)),
-    sphereRef2(Sphere(glm::vec3( 0.0,    0.0, -1.0),   0.5,  &centerMaterial)),
-    sphereRef3(Sphere(glm::vec3(-1.0,0,-1), 0.5f, &leftMaterial)),
-    sphereRef4(Sphere(glm::vec3(1.0,0,-1), 0.5f, &rightMaterial)),
+    // Materials
+    groundMaterial(Lambertian(Vector3(0.8, 0.8, 0.8))),
+    centerMaterial(Lambertian(Vector3(0.7, 0.3, 0.3))),
+    leftMaterial(Metal(Vector3(0.8, 0.8, 0.8), 0.3)),
+    rightMaterial(Metal(Vector3(0.8, 0.6, 0.2), 1.0)),
+    // Objects
+    sphereRef(Sphere(Vector3(0,-100.5,-1), 100.f, &groundMaterial)),
+    sphereRef2(Sphere(Vector3( 0.0,    0.0, -1.0),   0.5,  &centerMaterial)),
+    sphereRef3(Sphere(Vector3(-1.0,0,-1), 0.5f, &leftMaterial)),
+    sphereRef4(Sphere(Vector3(1.0,0,-1), 0.5f, &rightMaterial)),
+    // Object Container
     world()
 {
     init();

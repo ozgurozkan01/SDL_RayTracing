@@ -6,17 +6,16 @@
 #include "Hittable.h"
 #include "Sphere.h"
 
-Lambertian::Lambertian(const glm::vec3 &color) : albedo(color)
+Lambertian::Lambertian(const Vector3 &color) : albedo(color)
 {}
 
-bool Lambertian::scatter(const Ray &r_in, const HitInfo &hitInfo, glm::vec3 &attenuation, Ray &scatteredRay) const
+bool Lambertian::scatter(const Ray &r_in, const HitInfo &hitInfo, Vector3 &attenuation, Ray &scatteredRay) const
 {
-    glm::vec3 scatterDirection = hitInfo.normal + Sphere::randomUnitVector();
+    Vector3 scatterDirection = hitInfo.normal + randomUnitVector();
 
-    if (Sphere::isDirectionNearZero(scatterDirection))
+    if (isDirectionNearZero(scatterDirection))
     {
         // If direction is nearly zero, then set the direction again
-        scatterDirection = hitInfo.normal;
     }
 
     scatteredRay = Ray(hitInfo.p, scatterDirection);
@@ -24,13 +23,13 @@ bool Lambertian::scatter(const Ray &r_in, const HitInfo &hitInfo, glm::vec3 &att
     return true;
 }
 
-Metal::Metal(const glm::vec3 &color, double fuzz) : albedo(color), fuzz(fuzz < 1 ? fuzz : 1)
+Metal::Metal(const Vector3 &color, double fuzz) : albedo(color), fuzz(fuzz < 1 ? fuzz : 1)
 {}
 
-bool Metal::scatter(const Ray &r_in, const HitInfo &hitInfo, glm::vec3 &attenuation, Ray &scatteredRay) const
+bool Metal::scatter(const Ray &r_in, const HitInfo &hitInfo, Vector3 &attenuation, Ray &scatteredRay) const
 {
-    glm::vec3 reflected = Ray::reflect(glm::normalize(r_in.getDirection()), hitInfo.normal);
-    scatteredRay = Ray(hitInfo.p, reflected + (float)fuzz * Sphere::randomUnitVector());
+    Vector3 reflected = Ray::reflect(normalize(r_in.getDirection()), hitInfo.normal);
+    scatteredRay = Ray(hitInfo.p, reflected + (float)fuzz * randomUnitVector());
     attenuation = albedo;
-    return glm::dot(scatteredRay.getDirection(), hitInfo.normal) > 0;
+    return dot(scatteredRay.getDirection(), hitInfo.normal) > 0;
 }

@@ -37,17 +37,17 @@ void Camera::init()
     viewportWidth = viewportHeight * (static_cast<double>(windowWidth) / windowHeight);
 
     // Calculate the vectors across the horizontal and down the vertical viewport edges.
-    viewportU = glm::vec3(viewportWidth, 0, 0);
-    viewportV = glm::vec3(0, -viewportHeight, 0);
+    viewportU = Vector3(viewportWidth, 0, 0);
+    viewportV = Vector3(0, -viewportHeight, 0);
     // Calculate the horizontal and vertical delta vectors from pixel to pixel.
     pixelDeltaU = viewportU / (float)windowWidth;
     pixelDeltaV = viewportV / (float)windowHeight;
     // Calculate the location of the upper left pixel.
-    viewportUpperLeft = cameraCenter - glm::vec3(0, 0, focalLength) - (viewportU / (float)2) - (viewportV / (float)2);
+    viewportUpperLeft = cameraCenter - Vector3(0, 0, focalLength) - (viewportU / (float)2) - (viewportV / (float)2);
     centeredPixelLoc = viewportUpperLeft + 0.5f * (pixelDeltaU + pixelDeltaV);
 }
 
-glm::vec3 Camera::rayColor(const Ray &ray, int depth, const class Hittable& world)
+Vector3 Camera::rayColor(const Ray &ray, int depth, const class Hittable& world)
 {
     HitInfo hitInfo;
 
@@ -59,7 +59,7 @@ glm::vec3 Camera::rayColor(const Ray &ray, int depth, const class Hittable& worl
     if (world.isHit(ray, 0.001, infinity, hitInfo))
     {
         Ray scatteredRay;
-        glm::vec3 attenuation;
+        Vector3 attenuation;
         if (hitInfo.material->scatter(ray, hitInfo, attenuation, scatteredRay))
         {
             return attenuation * rayColor(scatteredRay, depth-1, world);
@@ -68,9 +68,9 @@ glm::vec3 Camera::rayColor(const Ray &ray, int depth, const class Hittable& worl
         return {0, 0, 0};
     }
 
-    glm::vec3 unitDirection = glm::normalize(ray.getDirection());
-    float a = 0.5f * (unitDirection.y + 1.0f);
-    return ((1.0f - (float)a) * glm::vec3(1.0, 1.0, 1.0)) + ((float)a * glm::vec3(0.5, 0.7, 1.0));
+    Vector3 unitDirection = normalize(ray.getDirection());
+    float a = 0.5f * (unitDirection.y() + 1.0f);
+    return ((1.0f - (float)a) * Vector3(1.0, 1.0, 1.0)) + ((float)a * Vector3(0.5, 0.7, 1.0));
 }
 
 void Camera::setPixelColors(const Hittable &world)
@@ -79,7 +79,7 @@ void Camera::setPixelColors(const Hittable &world)
     {
         for (int x = 0; x < windowWidth; ++x)
         {
-            glm::vec3 pixelColorVector(0, 0, 0);
+            Vector3 pixelColorVector(0, 0, 0);
 
             for (int i = 0; i < samplesPerPixel; ++i)
             {
@@ -89,10 +89,10 @@ void Camera::setPixelColors(const Hittable &world)
             }
 
             pixelColorVector /= samplesPerPixel;
-            pixelColorVector = glm::vec3(sqrt(pixelColorVector.r), sqrt(pixelColorVector.g), sqrt(pixelColorVector.b));
-            int red = static_cast<int>(255 * pixelColorVector.r);
-            int green = static_cast<int>(255 * pixelColorVector.g);
-            int blue = static_cast<int>(255 * pixelColorVector.b);
+            pixelColorVector = Vector3(sqrt(pixelColorVector.x()), sqrt(pixelColorVector.y()), sqrt(pixelColorVector.z()));
+            int red = static_cast<int>(255 * pixelColorVector.x());
+            int green = static_cast<int>(255 * pixelColorVector.y());
+            int blue = static_cast<int>(255 * pixelColorVector.z());
             int alpha = 255;
 
             uint32_t pixelColor = (red << 24) | (green << 16) | (blue << 8) | alpha;
@@ -116,7 +116,7 @@ Camera::~Camera()
     SDL_DestroyTexture(texture);
 }
 
-glm::vec3 Camera::pixelSampleSquare() const
+Vector3 Camera::pixelSampleSquare() const
 {
     // Returns a random point in the square surrounding a pixel at the origin.
     auto px = -0.5 + rand() / (RAND_MAX + 1.0);

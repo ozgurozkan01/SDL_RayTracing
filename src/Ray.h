@@ -5,20 +5,20 @@
 #ifndef SDL_RAYTRACING_RAY_H
 #define SDL_RAYTRACING_RAY_H
 
-#include "GLM/glm/glm.hpp"
+#include "Vector3.h"
 
 class Ray {
 public:
     Ray() = default;
-    Ray(const glm::vec3& _origin, const glm::vec3& _direction);
+    Ray(const Vector3& _origin, const Vector3& _direction);
 
-    [[nodiscard]] glm::vec3 getOrigin() const;
-    [[nodiscard]] glm::vec3 getDirection() const;
-    [[nodiscard]] glm::vec3 at(float t) const;
-    [[nodiscard]] static glm::vec3 reflect(const glm::vec3& v, const glm::vec3& n) ;
+    [[nodiscard]] Vector3 getOrigin() const;
+    [[nodiscard]] Vector3 getDirection() const;
+    [[nodiscard]] Vector3 at(float t) const;
+    [[nodiscard]] static Vector3 reflect(const Vector3& v, const Vector3& n) ;
 private:
-    glm::vec3 origin;
-    glm::vec3 direction;
+    Vector3 origin;
+    Vector3 direction;
 };
 
 
