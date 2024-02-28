@@ -28,7 +28,7 @@ Metal::Metal(const Vector3 &color, double fuzz) : albedo(color), fuzz(fuzz < 1 ?
 
 bool Metal::scatter(const Ray &r_in, const HitInfo &hitInfo, Vector3 &attenuation, Ray &scatteredRay) const
 {
-    Vector3 reflected = Ray::reflect(normalize(r_in.getDirection()), hitInfo.normal);
+    Vector3 reflected = reflect(normalize(r_in.getDirection()), hitInfo.normal);
     scatteredRay = Ray(hitInfo.p, reflected + (float)fuzz * randomUnitVector());
     attenuation = albedo;
     return dot(scatteredRay.getDirection(), hitInfo.normal) > 0;
@@ -50,8 +50,8 @@ bool Dielectric::scatter(const Ray &r_in, const HitInfo &hitInfo, Vector3 &atten
     bool cannotRefract = refractionRatio * sinTheta > 1.0;
     Vector3 direction;
 
-    if (cannotRefract)
-        direction = Ray::reflect(unitDirection, hitInfo.normal);
+    if (cannotRefract || reflectance(cosTheta, refractionRatio) > (rand() / (RAND_MAX + 1.0)))
+        direction = reflect(unitDirection, hitInfo.normal);
     else
         direction = refract(unitDirection, hitInfo.normal, refractionRatio);
     scatteredRay = Ray(hitInfo.p, direction);

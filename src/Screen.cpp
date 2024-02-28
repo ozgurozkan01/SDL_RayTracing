@@ -16,11 +16,6 @@ Screen::Screen() :
     centerMaterial(Lambertian(Vector3(0.1, 0.2, 0.5))),
     leftMaterial(Dielectric(1.5)),
     rightMaterial(Metal(Vector3(0.8, 0.6, 0.2), 1.0)),
-    // Objects
-    sphereRef(Sphere(Vector3(0,-100.5,-1), 100.f, &groundMaterial)),
-    sphereRef2(Sphere(Vector3( 0.0,    0.0, -1.0),   0.5,  &centerMaterial)),
-    sphereRef3(Sphere(Vector3(-1.0,0,-1), 0.5f, &leftMaterial)),
-    sphereRef4(Sphere(Vector3(1.0,0,-1), 0.5f, &rightMaterial)),
     // Object Container
     world()
 {
@@ -34,10 +29,11 @@ Screen::~Screen()
 
 bool Screen::init()
 {
-    world.add(&sphereRef);
-    world.add(&sphereRef2);
-    world.add(&sphereRef3);
-    world.add(&sphereRef4);
+    world.add(new Sphere(Vector3(0,-100.5,-1), 100.f, &groundMaterial));
+    world.add(new Sphere(Vector3( 0.0,    0.0, -1.0),   0.5,  &centerMaterial));
+    world.add(new Sphere(Vector3(-1.0,0,-1), 0.5f, &leftMaterial));
+    world.add(new Sphere(Vector3(-1.0,0,-1), -0.4f, &leftMaterial));
+    world.add(new Sphere(Vector3(1.0,0,-1), 0.5f, &rightMaterial));
 
     WINDOW_HEIGHT = WINDOW_WIDTH / aspectRatio;
     WINDOW_HEIGHT = (WINDOW_HEIGHT < 1) ? 1 : WINDOW_HEIGHT;

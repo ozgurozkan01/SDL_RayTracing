@@ -17,12 +17,6 @@ private:
     SDL_Renderer* renderer{};
 
     Camera* camera;
-
-    Sphere sphereRef;
-    Sphere sphereRef2;
-    Sphere sphereRef3;
-    Sphere sphereRef4;
-
     Lambertian groundMaterial;
     Lambertian centerMaterial;
     Dielectric leftMaterial;
