@@ -15,7 +15,6 @@ public:
     [[nodiscard]] Vector3 getOrigin() const;
     [[nodiscard]] Vector3 getDirection() const;
     [[nodiscard]] Vector3 at(float t) const;
-    [[nodiscard]] static Vector3 reflect(const Vector3& v, const Vector3& n) ;
 private:
     Vector3 origin;
     Vector3 direction;

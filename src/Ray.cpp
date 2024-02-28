@@ -19,7 +19,3 @@ Vector3 Ray::getDirection() const {
 Vector3 Ray::at(float t) const {
     return origin + (t * direction);
 }
-
-Vector3 Ray::reflect(const Vector3 &v, const Vector3 &n) {
-    return v - 2 * dot(v, n) * n;
-}

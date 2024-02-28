@@ -162,6 +162,11 @@ inline bool isDirectionNearZero(const Vector3 &direction)
     return (abs(direction.x()) < overLimit) && (abs(direction.y()) < overLimit) && (abs(direction.z()) < overLimit);
 }
 
+inline Vector3 reflect(const Vector3& v, const Vector3& n)
+{
+    return v - 2 * dot(v, n) * n;
+}
+
 inline Vector3 refract(const Vector3& uv, const Vector3& n, double etaiOverEta) {
     auto cosTheta = fmin(dot(-uv, n), 1.0);
     Vector3 rayPerp = etaiOverEta * (uv + cosTheta * n);
