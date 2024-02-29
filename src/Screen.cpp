@@ -10,7 +10,7 @@ Screen::Screen() :
     WINDOW_NAME("SDL_RayTracing"),
     isRunning(true),
     aspectRatio(16.f / 9.f),
-    WINDOW_WIDTH(45),
+    WINDOW_WIDTH(720),
     world()
 {
     init();

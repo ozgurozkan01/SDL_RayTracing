@@ -5,7 +5,10 @@
 #include <iostream>
 #include "PPM.h"
 
-PPM::PPM(int _imageWidth, int imageHeight) : imageWidth(_imageWidth), imageHeight(imageHeight) {}
+PPM::PPM(int _imageWidth, int imageHeight) : imageWidth(_imageWidth), imageHeight(imageHeight)
+{
+    init();
+}
 
 void PPM::init()
 {

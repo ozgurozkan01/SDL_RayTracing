@@ -4,6 +4,7 @@
 
 #include "Vector3.h"
 #include "Ray.h"
+#include "PPM.h"
 
 class Camera
 {
@@ -15,6 +16,8 @@ public:
     void render();
 
 private:
+    PPM* ppmImage;
+
     SDL_Renderer* renderer;
     SDL_Texture* texture;
 

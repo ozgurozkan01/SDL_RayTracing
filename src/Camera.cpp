@@ -14,8 +14,8 @@ Camera::Camera(int _windowWidth, int _windowHeight, SDL_Renderer* renderer) :
         windowHeight(_windowHeight),
         windowWidth(_windowWidth),
         renderer(renderer),
-        samplesPerPixel(500),
-        maxDepth(50),
+        samplesPerPixel(15),
+        maxDepth(15),
         verticalFOV(20.0),
         lookFrom(13,2,3),
         lookAt(0,0,0),
@@ -59,6 +59,8 @@ void Camera::init()
     defocusRadius = focusDistance * tan(difocusAngle/2 * (M_PI / 180));
     defocusDiskU = u * defocusRadius;
     defocusDiskV = v * defocusRadius;
+
+    ppmImage = new PPM(windowWidth, windowHeight);
 }
 
 Vector3 Camera::rayColor(const Ray &ray, int depth, const class Hittable& world)
@@ -109,6 +111,7 @@ void Camera::setPixelColors(const Hittable &world)
             int alpha = 255;
             uint32_t pixelColor = (red << 24) | (green << 16) | (blue << 8) | alpha;
             pixels[x + y * windowWidth] = pixelColor;
+            ppmImage->loadImage(red, green, blue, alpha);
         }
     }
 }
@@ -125,6 +128,7 @@ void Camera::render()
 Camera::~Camera()
 {
     delete [] pixels;
+    delete ppmImage;
     SDL_DestroyTexture(texture);
 }
 
