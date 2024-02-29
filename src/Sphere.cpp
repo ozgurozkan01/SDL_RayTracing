@@ -1,6 +1,6 @@
 #include "Sphere.h"
 
-Sphere::Sphere(Vector3 _center, float _radius, Material* material)
+Sphere::Sphere(Vector3 _center, float _radius, std::shared_ptr<Material> material)
         : center(_center), radius(_radius), material(material)
 {}
 

@@ -14,14 +14,14 @@ Camera::Camera(int _windowWidth, int _windowHeight, SDL_Renderer* renderer) :
         windowHeight(_windowHeight),
         windowWidth(_windowWidth),
         renderer(renderer),
-        samplesPerPixel(20),
-        maxDepth(15),
+        samplesPerPixel(500),
+        maxDepth(50),
         verticalFOV(20.0),
-        lookFrom(-2,2,1),
-        lookAt(0,0,-1),
+        lookFrom(13,2,3),
+        lookAt(0,0,0),
         viewUp(0, 1, 0),
-        focusDistance(3.4),
-        difocusAngle(10.0)
+        focusDistance(10),
+        difocusAngle(0.6)
 {
     init();
 }
@@ -107,7 +107,6 @@ void Camera::setPixelColors(const Hittable &world)
             int green = static_cast<int>(255 * sqrt(pixelColorVector.y()));
             int blue = static_cast<int>(255 * sqrt(pixelColorVector.z()));
             int alpha = 255;
-
             uint32_t pixelColor = (red << 24) | (green << 16) | (blue << 8) | alpha;
             pixels[x + y * windowWidth] = pixelColor;
         }

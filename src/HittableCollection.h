@@ -7,16 +7,18 @@
 
 #include "Hittable.h"
 #include <vector>
+#include <memory>
+
 
 class HittableCollection : public Hittable{
 public:
     HittableCollection();
-    explicit HittableCollection(Hittable* object);
+    explicit HittableCollection(std::shared_ptr<Hittable> object);
     void clear();
-    void add(Hittable* object);
+    void add(std::shared_ptr<Hittable> object);
     bool isHit(const Ray& r, double ray_tmin, double ray_tmax, HitInfo& rec) const override;
 private:
-    std::vector<Hittable*> hittables;
+    std::vector<std::shared_ptr<Hittable>> hittables;
 
 };
 

@@ -7,6 +7,7 @@
 
 #include "Ray.h"
 #include "Vector3.h"
+#include <memory>
 
 class Material;
 
@@ -16,7 +17,7 @@ struct HitInfo
     Vector3 normal;
     double t;
 
-    Material* material;
+    std::shared_ptr<Material> material;
 
     bool frontFace;
 

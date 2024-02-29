@@ -6,7 +6,7 @@
 
 HittableCollection::HittableCollection() = default;
 
-HittableCollection::HittableCollection(Hittable *object)
+HittableCollection::HittableCollection(std::shared_ptr<Hittable> object)
 {
     add(object);
 }
@@ -16,7 +16,7 @@ void HittableCollection::clear()
     hittables.clear();
 }
 
-void HittableCollection::add(Hittable *object)
+void HittableCollection::add(std::shared_ptr<Hittable> object)
 {
     hittables.push_back(object);
 }

@@ -184,4 +184,22 @@ inline Vector3 randomInUnitDisk()
     }
 }
 
+inline double random_double() {
+    // Returns a random real in [0,1).
+    return rand() / (RAND_MAX + 1.0);
+}
+
+inline double random_double(double min, double max) {
+    // Returns a random real in [min,max).
+    return min + (max-min)*random_double();
+}
+
+static Vector3 random() {
+    return Vector3(random_double(), random_double(), random_double());
+}
+
+static Vector3 random(double min, double max) {
+    return Vector3(random_double(min,max), random_double(min,max), random_double(min,max));
+}
+
 #endif //SDL_RAYTRACING_VECTOR3_H

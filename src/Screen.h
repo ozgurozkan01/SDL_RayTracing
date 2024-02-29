@@ -17,11 +17,6 @@ private:
     SDL_Renderer* renderer{};
 
     Camera* camera;
-    Lambertian groundMaterial;
-    Lambertian centerMaterial;
-    Dielectric leftMaterial;
-    Metal rightMaterial;
-
     HittableCollection world;
 
     bool isRunning;
@@ -31,16 +26,17 @@ private:
     const char* WINDOW_NAME;
 
     float aspectRatio;
+
+    bool init();
+    void eventProcess();
+    void destroy();
+    void sphereGenerator();
+
 public:
     Screen();
     ~Screen();
 
-    bool init();
-
     void update();
-    void eventProcess();
-
-    void destroy();
 };
 
 
