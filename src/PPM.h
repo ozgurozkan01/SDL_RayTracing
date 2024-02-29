@@ -5,14 +5,21 @@
 #ifndef SDL_RAYTRACING_PPM_H
 #define SDL_RAYTRACING_PPM_H
 
+#include "fstream"
+#include "cstdint"
 
 class PPM {
-    int windowWidth;
-    int windowHeight;
+    int imageWidth;
+    int imageHeight;
 
-    PPM();
+    const char* fileName = "image.ppm";
 
-
+    std::ofstream imageFile;
+public:
+    void init();
+    PPM(int _imageWidth, int imageHeight);
+    ~PPM();
+    void loadImage(int red, int green, int blue, int alpha);
 };
 
 
