@@ -15,3 +15,7 @@
 38	973	7309222768483266	CMakeFiles/SDL_RayTracing.dir/src/HittableCollection.cpp.obj	dfd9e42793575a8
 28	893	7309222767680382	CMakeFiles/SDL_RayTracing.dir/src/Material.cpp.obj	541963792e8f5d5c
 13	527	7309334551788199	CMakeFiles/SDL_RayTracing.dir/src/PPM.cpp.obj	1177cf9d23fbf7a8
+13	488	7309343284335694	CMakeFiles/SDL_RayTracing.dir/src/PPM.cpp.obj	1177cf9d23fbf7a8
+8	1231	7309343291766433	CMakeFiles/SDL_RayTracing.dir/src/Camera.cpp.obj	f25e6b0459a52fb3
+4	1470	7309343294146335	CMakeFiles/SDL_RayTracing.dir/src/Screen.cpp.obj	f478d43c1acb21e5
+1471	1618	7309343295587824	SDL_RayTracing.exe	409e27cd8cd7bd37
