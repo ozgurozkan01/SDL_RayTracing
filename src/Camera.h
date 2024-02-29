@@ -34,6 +34,11 @@ public:
     Vector3 cameraCenter;
     double focalLength;
 
+    // Camera
+    double verticalFOV;
+    double thetaAngle;
+    double halfHeightVerticalFOV;
+
     void setPixelColors(const class Hittable& world);
     void render();
 private:

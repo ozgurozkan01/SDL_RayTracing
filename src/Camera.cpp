@@ -3,24 +3,22 @@
 //
 #include "SDL2/SDL.h"
 #include <cstdlib>
-
 #include "Camera.h"
 #include "Ray.h"
 #include "Hittable.h"
-#include "Sphere.h"
 #include "Material.h"
 
 const double infinity = std::numeric_limits<double>::infinity();
 
 Camera::Camera(int _windowWidth, int _windowHeight, SDL_Renderer* renderer) :
-    windowHeight(_windowHeight),
-    windowWidth(_windowWidth),
-    focalLength(1.f),
-    viewportHeight(2.f),
-    cameraCenter(0, 0, 0),
-    renderer(renderer),
-    samplesPerPixel(30),
-    maxDepth(10)
+        windowHeight(_windowHeight),
+        windowWidth(_windowWidth),
+        focalLength(1.f),
+        cameraCenter(0, 0, 0),
+        renderer(renderer),
+        samplesPerPixel(20),
+        maxDepth(15),
+        verticalFOV(120.0)
 {
     init();
 }
@@ -34,6 +32,9 @@ void Camera::init()
                                 windowWidth,
                                 windowHeight);
 
+    thetaAngle = verticalFOV * (M_PI / 180);
+    halfHeightVerticalFOV = tan(thetaAngle/2);
+    viewportHeight = 2 * halfHeightVerticalFOV * focalLength;
     viewportWidth = viewportHeight * (static_cast<double>(windowWidth) / windowHeight);
 
     // Calculate the vectors across the horizontal and down the vertical viewport edges.
@@ -89,10 +90,9 @@ void Camera::setPixelColors(const Hittable &world)
             }
 
             pixelColorVector /= samplesPerPixel;
-            pixelColorVector = Vector3(sqrt(pixelColorVector.x()), sqrt(pixelColorVector.y()), sqrt(pixelColorVector.z()));
-            int red = static_cast<int>(255 * pixelColorVector.x());
-            int green = static_cast<int>(255 * pixelColorVector.y());
-            int blue = static_cast<int>(255 * pixelColorVector.z());
+            int red = static_cast<int>(255 * sqrt(pixelColorVector.x()));
+            int green = static_cast<int>(255 * sqrt(pixelColorVector.y()));
+            int blue = static_cast<int>(255 * sqrt(pixelColorVector.z()));
             int alpha = 255;
 
             uint32_t pixelColor = (red << 24) | (green << 16) | (blue << 8) | alpha;
