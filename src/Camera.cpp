@@ -13,18 +13,22 @@ const double infinity = std::numeric_limits<double>::infinity();
 Camera::Camera(int _windowWidth, int _windowHeight, SDL_Renderer* renderer) :
         windowHeight(_windowHeight),
         windowWidth(_windowWidth),
-        focalLength(1.f),
-        cameraCenter(0, 0, 0),
         renderer(renderer),
         samplesPerPixel(20),
         maxDepth(15),
-        verticalFOV(120.0)
+        verticalFOV(90.0),
+        lookFrom(-2,2,1),
+        lookAt(0,0,-1),
+        viewUp(0, 1, 0)
 {
     init();
 }
 
 void Camera::init()
 {
+    cameraCenter = lookFrom;
+    focalLength = (lookAt - lookFrom).length();
+
     pixels = new uint32_t[windowWidth * windowHeight];
     texture = SDL_CreateTexture(renderer,
                                 SDL_PIXELFORMAT_RGBA8888,
@@ -37,14 +41,18 @@ void Camera::init()
     viewportHeight = 2 * halfHeightVerticalFOV * focalLength;
     viewportWidth = viewportHeight * (static_cast<double>(windowWidth) / windowHeight);
 
+    w = normalize(lookFrom - lookAt);
+    u = normalize(cross(viewUp, w));
+    v = cross(w, u);
+
     // Calculate the vectors across the horizontal and down the vertical viewport edges.
-    viewportU = Vector3(viewportWidth, 0, 0);
-    viewportV = Vector3(0, -viewportHeight, 0);
+    viewportU = viewportWidth * u;
+    viewportV = -viewportHeight * v;
     // Calculate the horizontal and vertical delta vectors from pixel to pixel.
     pixelDeltaU = viewportU / (float)windowWidth;
     pixelDeltaV = viewportV / (float)windowHeight;
     // Calculate the location of the upper left pixel.
-    viewportUpperLeft = cameraCenter - Vector3(0, 0, focalLength) - (viewportU / (float)2) - (viewportV / (float)2);
+    viewportUpperLeft = cameraCenter - (focalLength * w) - (viewportU / (float)2) - (viewportV / (float)2);
     centeredPixelLoc = viewportUpperLeft + 0.5f * (pixelDeltaU + pixelDeltaV);
 }
 

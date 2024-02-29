@@ -31,13 +31,16 @@ public:
     Vector3 pixelDeltaU;
     Vector3 pixelDeltaV;
 
+    // Camera
     Vector3 cameraCenter;
     double focalLength;
-
-    // Camera
     double verticalFOV;
     double thetaAngle;
     double halfHeightVerticalFOV;
+    Vector3 lookFrom;
+    Vector3 lookAt;
+    Vector3 viewUp;
+    Vector3 v, u, w;
 
     void setPixelColors(const class Hittable& world);
     void render();
