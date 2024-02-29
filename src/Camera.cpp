@@ -16,7 +16,7 @@ Camera::Camera(int _windowWidth, int _windowHeight, SDL_Renderer* renderer) :
         renderer(renderer),
         samplesPerPixel(20),
         maxDepth(15),
-        verticalFOV(90.0),
+        verticalFOV(20.0),
         lookFrom(-2,2,1),
         lookAt(0,0,-1),
         viewUp(0, 1, 0)
