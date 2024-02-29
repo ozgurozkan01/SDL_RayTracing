@@ -174,4 +174,14 @@ inline Vector3 refract(const Vector3& uv, const Vector3& n, double etaiOverEta) 
     return rayPerp + rayParallel;
 }
 
+inline Vector3 randomInUnitDisk()
+{
+    while (true)
+    {
+        auto p = Vector3(-1 + 2 * rand() / (RAND_MAX + 1.0), -1 + 2 * rand() / (RAND_MAX + 1.0), 0);
+        if (p.dotProduct() < 1)
+            return p;
+    }
+}
+
 #endif //SDL_RAYTRACING_VECTOR3_H

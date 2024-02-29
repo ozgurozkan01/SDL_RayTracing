@@ -19,7 +19,9 @@ Camera::Camera(int _windowWidth, int _windowHeight, SDL_Renderer* renderer) :
         verticalFOV(20.0),
         lookFrom(-2,2,1),
         lookAt(0,0,-1),
-        viewUp(0, 1, 0)
+        viewUp(0, 1, 0),
+        focusDistance(3.4),
+        difocusAngle(10.0)
 {
     init();
 }
@@ -27,7 +29,6 @@ Camera::Camera(int _windowWidth, int _windowHeight, SDL_Renderer* renderer) :
 void Camera::init()
 {
     cameraCenter = lookFrom;
-    focalLength = (lookAt - lookFrom).length();
 
     pixels = new uint32_t[windowWidth * windowHeight];
     texture = SDL_CreateTexture(renderer,
@@ -38,7 +39,7 @@ void Camera::init()
 
     thetaAngle = verticalFOV * (M_PI / 180);
     halfHeightVerticalFOV = tan(thetaAngle/2);
-    viewportHeight = 2 * halfHeightVerticalFOV * focalLength;
+    viewportHeight = 2 * halfHeightVerticalFOV * focusDistance;
     viewportWidth = viewportHeight * (static_cast<double>(windowWidth) / windowHeight);
 
     w = normalize(lookFrom - lookAt);
@@ -52,8 +53,12 @@ void Camera::init()
     pixelDeltaU = viewportU / (float)windowWidth;
     pixelDeltaV = viewportV / (float)windowHeight;
     // Calculate the location of the upper left pixel.
-    viewportUpperLeft = cameraCenter - (focalLength * w) - (viewportU / (float)2) - (viewportV / (float)2);
+    viewportUpperLeft = cameraCenter - (focusDistance * w) - (viewportU / (float)2) - (viewportV / (float)2);
     centeredPixelLoc = viewportUpperLeft + 0.5f * (pixelDeltaU + pixelDeltaV);
+
+    defocusRadius = focusDistance * tan(difocusAngle/2 * (M_PI / 180));
+    defocusDiskU = u * defocusRadius;
+    defocusDiskV = v * defocusRadius;
 }
 
 Vector3 Camera::rayColor(const Ray &ray, int depth, const class Hittable& world)
@@ -137,8 +142,14 @@ Ray Camera::getRay(int x, int y)
     auto pixelCenter = centeredPixelLoc + ((float)x * pixelDeltaU) + ((float)y * pixelDeltaV);
     auto pixelSample = pixelCenter + pixelSampleSquare();
 
-    auto rayOrigin = cameraCenter;
+    auto rayOrigin = (difocusAngle <= 0) ? cameraCenter : defocusDiskSample();
     auto rayDirection = pixelSample - rayOrigin;
 
     return Ray(rayOrigin, rayDirection);
+}
+
+Vector3 Camera::defocusDiskSample()
+{
+    auto p = randomInUnitDisk();
+    return cameraCenter + (p[0] * defocusDiskU) + (p[1] * defocusDiskV);
 }

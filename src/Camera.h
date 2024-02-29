@@ -42,6 +42,12 @@ public:
     Vector3 viewUp;
     Vector3 v, u, w;
 
+    double defocusRadius;
+    double difocusAngle;
+    double focusDistance;
+    Vector3 defocusDiskU;
+    Vector3 defocusDiskV;
+
     void setPixelColors(const class Hittable& world);
     void render();
 private:
@@ -49,6 +55,7 @@ private:
     Vector3 rayColor(const class Ray& ray, int depth, const class Hittable& world);
     Ray getRay(int x, int y);
     [[nodiscard]] Vector3 pixelSampleSquare() const;
+    Vector3 defocusDiskSample();
 };
 
 
